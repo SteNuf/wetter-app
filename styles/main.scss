@@ -1,3 +1,49 @@
+@import "color.scss";
+@import "font.scss";
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 body {
-  background-color: yellow;
+  background-color: $primary-bgcolor;
+}
+
+#app {
+  color: $font-color;
+  padding: 1rem;
+  font-family: Inter, sans-serif;
+  min-height: 100vh;
+}
+
+.navigation-bar {
+  background-color: red;
+  color: $font-color;
+  border: 5px solid magenta;
+}
+
+.actually-weather {
+  border: 5px solid yellow;
+  background-color: rgb(77, 75, 75);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-top: 2rem;
+
+  &__town {
+    font-size: 24px;
+  }
+
+  &__temperature {
+    font-size: 4.5rem;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+
+  &__condition {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
 }

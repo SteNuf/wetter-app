@@ -4,10 +4,29 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Die Wetter App</title>
+    <title>Die-Wetter-App</title>
   </head>
   <body>
-    <div id="app">Test 2</div>
+    <div id="app" class="background-color">
+      Test 2
+      <div class="navigation-bar">
+        Navigation Bar
+        <div class="navigation-bar__back-Button">Back</div>
+        <div class="navigation-bar__favorite-Button">Favorit</div>
+      </div>
+
+      <div class="actually-weather">
+        <div class="actually-weather__town">Leipzig</div>
+        <div class="actually-weather__temperature">20°</div>
+        <div class="actually-weather__condition">bedeckt</div>
+        <div class="actually-weather__day">
+          <span class="actually-weather__max-temperatur">H:20° </span>
+          <span class="actually-weather__min-temperatur">T:10°</span>
+        </div>
+      </div>
+
+      <button class="test-button">Test</button>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
