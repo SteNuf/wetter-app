@@ -7,6 +7,15 @@
     <title>Die-Wetter-App</title>
   </head>
   <body>
+    <div class="loader-wrapper" id="loader">
+      <div class="lds-ring">
+        Lade Wetter für ...
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <div id="app" class="background-color">
       Test 2
       <div class="navigation-bar">
@@ -16,16 +25,17 @@
       </div>
 
       <div class="actually-weather">
-        <div class="actually-weather__town">Leipzig</div>
-        <div class="actually-weather__temperature">20°</div>
-        <div class="actually-weather__condition">bedeckt</div>
+        <div class="actually-weather__town"></div>
+        <div class="actually-weather__temperature"></div>
+        <div class="actually-weather__condition"></div>
         <div class="actually-weather__day">
-          <span class="actually-weather__max-temperatur">H:20° </span>
-          <span class="actually-weather__min-temperatur">T:10°</span>
+          <span class="actually-weather__max-temperatur"></span>
+          <span class="actually-weather__min-temperatur"></span>
         </div>
       </div>
 
-      <button class="test-button">Test</button>
+      <button class="test-load-button">Laden</button>
+      <button class="test-save-button">Save</button>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
