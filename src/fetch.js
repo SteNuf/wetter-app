@@ -20,26 +20,11 @@ export async function getWeatherAPI() {
   };
 }
 
-//5. API in HTML rendern
-export function renderWeatherText(weather) {
-  document.querySelector(".actually-weather__town").textContent = weather.name;
-  document.querySelector(".actually-weather__temperature").textContent =
-    weather.temp + " °C";
-
-  document.querySelector(".actually-weather__condition").textContent =
-    weather.condition;
-
-  document.querySelector(".actually-weather__max-temperatur").textContent =
-    "H:" + weather.heatIndex + "°";
-  document.querySelector(".actually-weather__min-temperatur").textContent =
-    "T:" + weather.dewPoint + "°";
-}
-
 //3. API in LocalStorage speichern
 export function saveWeatherToLocalStorage() {
   const weatherData = weatherApi;
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(weatherData));
-  console.log(weatherData);
+  //console.log(weatherData);
 }
 //4. API aus LocalStorage herausgeben
 export function getWeatherFromLocalStorage() {
@@ -50,4 +35,21 @@ export function getWeatherFromLocalStorage() {
   console.log(data);
 
   return JSON.parse(data);
+}
+
+//5. API in HTML rendern
+export function renderWeatherText(weather) {
+  document.querySelector(".actually-weather__town").textContent = weather.name;
+
+  document.querySelector(".actually-weather__temperature").textContent =
+    weather.temp + " °C";
+
+  document.querySelector(".actually-weather__condition").textContent =
+    weather.condition;
+
+  document.querySelector(".actually-weather__max-temperatur").textContent =
+    "H:" + weather.heatIndex + "°";
+
+  document.querySelector(".actually-weather__min-temperatur").textContent =
+    "T:" + weather.dewPoint + "°";
 }
