@@ -12,11 +12,13 @@ let saveWeatherList = getWeatherFromLocalStorage();
 const testLoadButton = document.querySelector(".test-load-button");
 const testSaveButton = document.querySelector(".test-save-button");
 
+//Test Button zum Laden der API Daten
 testLoadButton.addEventListener("click", async () => {
   const weather = await getWeatherAPI();
   renderWeatherText(weather);
 });
 
+//Test Button zum speichern der Daten
 testSaveButton.addEventListener("click", async () => {
   const saveWeather = await saveWeatherToLocalStorage();
   if (saveWeather) {
