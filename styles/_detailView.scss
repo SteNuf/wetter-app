@@ -1,0 +1,25 @@
+.actually-weather {
+  border: 5px solid yellow;
+  background-color: $secondary-bgcolor;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-top: 2rem;
+  text-shadow: $text-shadow;
+
+  &__town {
+    font-size: 24px;
+  }
+
+  &__temperature {
+    font-size: 4.5rem;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+
+  &__condition {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+}

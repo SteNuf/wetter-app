@@ -1,110 +1,51 @@
-@import "color.scss";
+@import "mixins";
+@import "variablesColors.scss";
 @import "font.scss";
+@import "loadingScreen";
+@import "detailView";
+@import "navigationBar";
 
 * {
   margin: 0px;
   padding: 0px;
 }
 body {
-  background-color: $primary-bgcolor;
-}
-
-.loader-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background-color: grey;
-  z-index: 9999;
-}
+  margin-top: 10rem;
 
-.lds-ring {
-  color: #abbd81;
-  justify-content: center;
-}
-
-.lds-ring,
-.lds-ring div {
-  box-sizing: border-box;
-}
-.lds-ring {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  justify-content: center;
-}
-.lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 8px solid currentColor;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: currentColor transparent transparent transparent;
-}
-.lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
-}
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+  @include largeScreens {
+    background-color: lighten($primary-bgcolor, 10);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
   }
 }
+
 #app {
+  padding: 1rem;
   display: none;
+  border: 5px solid blue;
+  min-height: 100vh;
+  background-color: linear-gradient(
+    0deg,
+    $elevation-2 0%,
+    $primary-bgcolor 70%
+  );
+
+  @include largeScreens {
+    width: 400px;
+    height: 900px;
+    border-radius: $border-radius;
+    overflow: auto;
+    min-height: unset;
+    box-shadow: $box-shadow;
+  }
 }
 
 .background-color {
   color: $font-color;
+  background-color: $primary-bgcolor;
   padding: 1rem;
   font-family: Inter, sans-serif;
-  min-height: 100vh;
-}
-
-.navigation-bar {
-  background-color: red;
-  color: $font-color;
-  border: 5px solid magenta;
-}
-
-.actually-weather {
-  border: 5px solid yellow;
-  background-color: rgb(77, 75, 75);
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  margin-top: 2rem;
-
-  &__town {
-    font-size: 24px;
-  }
-
-  &__temperature {
-    font-size: 4.5rem;
-    margin-top: 6px;
-    margin-bottom: 6px;
-  }
-
-  &__condition {
-    font-size: 16px;
-    margin-bottom: 4px;
-  }
 }
