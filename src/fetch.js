@@ -1,3 +1,5 @@
+import { formatTemperature } from "./utility";
+
 //1. Local Storage erstellen:
 const LOCAL_STORAGE_KEY = "wetter-app";
 
@@ -13,10 +15,10 @@ export async function getWeatherAPI() {
 
   return {
     name: body.location.name,
-    temp: body.current.temp_c,
+    temp: formatTemperature(body.current.temp_c),
     condition: body.current.condition.text,
-    heatIndex: body.current.heatindex_c,
-    dewPoint: body.current.dewpoint_c,
+    heatIndex: formatTemperature(body.current.heatindex_c),
+    dewPoint: formatTemperature(body.current.dewpoint_c),
   };
 }
 
