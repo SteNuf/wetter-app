@@ -2,14 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 3px solid yellow;
+  border: none;
   border-radius: 5px;
-  background-color: rgba(255, 250, 250, 0.2);
+  background-color: $secondary-bgcolor; //rgba(255, 250, 250, 0.2);
   margin-top: 2rem;
   padding: 1rem;
   font-family: "INTER", sans-serif;
   backdrop-filter: blur(50px);
-  box-shadow: 1px 1px 5px;
+  box-shadow: 1px 1px 1px;
 
   &_condition {
     margin-bottom: 1rem;
