@@ -1,8 +1,9 @@
 .actually-weather {
-  border: 5px solid yellow;
+  border: none;
   background-color: $secondary-bgcolor;
   display: flex;
   flex-direction: column;
+
   text-align: center;
   align-items: center;
   margin-top: 2rem;
