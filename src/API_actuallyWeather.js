@@ -8,6 +8,7 @@ let weatherApi = "";
 //2. API GetWeatherAPI() Verbindung erstellen:
 export async function getWeatherAPI() {
   const response = await fetch(
+    //"http://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=Leipzig&lang=de"
     "http://api.weatherapi.com/v1/current.json?key=cab870990fda438db75125235251909&q=Leipzig&lang=de"
   );
   const body = await response.json();
@@ -22,12 +23,12 @@ export async function getWeatherAPI() {
   };
 }
 
-//3. API in LocalStorage speichern
+//3. API in LocalStorage speichern:
 export function saveWeatherToLocalStorage() {
   const saveWeatherData = weatherApi;
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(saveWeatherData));
 }
-//4. API aus LocalStorage herausgeben
+//4. API aus LocalStorage herausgeben:
 export function getWeatherFromLocalStorage() {
   const data = localStorage.getItem(LOCAL_STORAGE_KEY);
   if (!data) {
@@ -37,7 +38,7 @@ export function getWeatherFromLocalStorage() {
   return JSON.parse(data);
 }
 
-//5. API in HTML rendern
+//5. API in HTML rendern:
 export function renderWeatherText(weather) {
   document.querySelector(".actually-weather__town").textContent = weather.name;
 

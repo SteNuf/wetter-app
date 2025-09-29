@@ -3,9 +3,14 @@ import {
   saveWeatherToLocalStorage,
   getWeatherFromLocalStorage,
   renderWeatherText,
-} from "./fetch.js";
+} from "./API_actuallyWeather";
 import "../styles/main.scss";
-import { renderLoadingScreen } from "./loadingScreen.js";
+//import { renderLoadingScreen } from "./loadingScreen.js";
+import {
+  getTodayForecastWeather,
+  renderTodayForecastWeather,
+  saveTodayForecastToLocalStorage,
+} from "./API_todayForecast.js";
 
 let actuallyWeatherData = "";
 let saveWeatherList = getWeatherFromLocalStorage();
@@ -16,8 +21,9 @@ const testSaveButton = document.querySelector(".test-save-button");
 //Test Button zum Laden der API Daten
 testLoadButton.addEventListener("click", async () => {
   const weather = await getWeatherAPI();
-
+  const weatherTodayForecast = await getTodayForecastWeather();
   renderWeatherText(weather);
+  renderTodayForecastWeather(weatherTodayForecast);
 });
 
 //Test Button zum speichern der Daten
@@ -26,6 +32,7 @@ testSaveButton.addEventListener("click", async () => {
   if (saveWeather) {
     renderWeatherText(saveWeather);
   }
+  const saveTodayForecast = await saveTodayForecastToLocalStorage();
 });
 
 // Loading Bildschirm
