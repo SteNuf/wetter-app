@@ -7,13 +7,15 @@
     <title>Die-Wetter-App</title>
   </head>
   <body>
-    <div class="loader-wrapper" id="loader">
-      <div class="lds-ring">
-        Lade Wetter für ...
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <div id="loader-root">
+      <div class="loader-wrapper" id="loader">
+        <div class="lds-ring">
+          <span>Lade Wetter für ...</span>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </div>
 
@@ -34,6 +36,11 @@
           <span class="actually-weather__max-temperatur"></span>
           <span class="actually-weather__min-temperatur"></span>
         </div>
+      </div>
+
+      <div class="today-forecast">
+        <div class="today-forecast_condition">Test Wind stürmich</div>
+        <div class="today-forecast_hours"></div>
       </div>
 
       <button class="test-load-button">Laden</button>

@@ -5,6 +5,7 @@ import {
   renderWeatherText,
 } from "./fetch.js";
 import "../styles/main.scss";
+import { renderLoadingScreen } from "./loadingScreen.js";
 
 let actuallyWeatherData = "";
 let saveWeatherList = getWeatherFromLocalStorage();
@@ -15,6 +16,7 @@ const testSaveButton = document.querySelector(".test-save-button");
 //Test Button zum Laden der API Daten
 testLoadButton.addEventListener("click", async () => {
   const weather = await getWeatherAPI();
+
   renderWeatherText(weather);
 });
 

@@ -24,8 +24,8 @@ export async function getWeatherAPI() {
 
 //3. API in LocalStorage speichern
 export function saveWeatherToLocalStorage() {
-  const weatherData = weatherApi;
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(weatherData));
+  const saveWeatherData = weatherApi;
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(saveWeatherData));
 }
 //4. API aus LocalStorage herausgeben
 export function getWeatherFromLocalStorage() {

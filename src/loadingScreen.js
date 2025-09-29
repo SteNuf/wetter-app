@@ -1,19 +1,27 @@
 export function renderLoadingScreen(message = "Lade...") {
-  const rootElement = document.getElementById("loader");
+  let rootElement = document.getElementById("loader-root");
+
+  if (!rootElement) {
+    rootElement = document.createElement("div");
+    rootElement.id = "loader-root";
+    document.body.appendChild(rootElement);
+  }
+
+  rootElement.innerHTML = getLoadingScreen(message);
 }
 
 function getLoadingScreen(message) {
   return `  
-
-<div class="loader-wrapper" id="loader">
+<div class="loader-wrapper" id="loader-root">
+  <div class="loader-wrapper" id="loader">
       <div class="lds-ring">
-        Lade Wetter für ${message}
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <span class="loader-text"> ${message} </span>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
       </div>
     </div>
-
+</div>
 `;
 }
