@@ -2,6 +2,7 @@
 const LOCAL_STORAGE_KEY = "today-forecast";
 
 let weatherTodayForcastAPI = "";
+let hoursForecastArray = [];
 
 //2. API GetWeatherAPI() Verbindung erstellen:
 export async function getTodayForecastWeather() {
@@ -11,11 +12,14 @@ export async function getTodayForecastWeather() {
   const body = await response.json();
   weatherTodayForcastAPI = body;
 
-  console.log(body);
+  console.log(weatherTodayForcastAPI);
+  const hourlyArray = weatherTodayForcastAPI.forecast.forecastday[0].hour;
+  console.log(hourlyArray[9]);
 
   return {
     condition: body.forecast.forecastday[0].day.condition.text,
     wind: body.forecast.forecastday[0].day.maxwind_kph,
+    hoursForecast: body.forecast.forecastday[0].hour,
   };
 }
 //3. API in LocalStorage speichern:
@@ -36,6 +40,7 @@ export function getTodayForecastFromLocalStorage() {
     return [];
   }
 }
+
 //5. API in HTML rendern:
 export function renderTodayForecastWeather(weatherTodayForecast) {
   document.querySelector(".today-forecast_condition").textContent =
@@ -43,4 +48,33 @@ export function renderTodayForecastWeather(weatherTodayForecast) {
     ". Wind bis zu " +
     weatherTodayForecast.wind +
     " km/h";
+}
+
+// 6. ab jetzt stündliche Wettervorhersage in HTML Code rendern
+
+export function renderHourlyForecast(weatherTodayForecast) {
+  const container = document.querySelector(".today-forecast_hours");
+  container.innerHTML = "";
+
+  const hours = weatherTodayForecast.hoursForecast;
+
+  const now = new Date().getHours();
+
+  hours.forEach((hourData, index) => {
+    const time = new Date(hourData.time);
+    const hourLabel =
+      index === now
+        ? "Jetzt"
+        : time.getHours().toString().padStart(1, "0") + " Uhr";
+
+    const hourItem = document.createElement("div");
+    hourItem.classList.add("hourItem");
+
+    hourItem.innerHTML = `
+     <div class="hour-time">${hourLabel}
+     <img  class="hourly-forecast__icon" src=https:${hourData.condition.icon}" />
+     <div class="hour-temp">${hourData.temp_c}°</div>
+     `;
+    container.appendChild(hourItem);
+  });
 }

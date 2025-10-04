@@ -8,6 +8,7 @@ import "../styles/main.scss";
 //import { renderLoadingScreen } from "./loadingScreen.js";
 import {
   getTodayForecastWeather,
+  renderHourlyForecast,
   renderTodayForecastWeather,
   saveTodayForecastToLocalStorage,
 } from "./API_todayForecast.js";
@@ -24,6 +25,7 @@ testLoadButton.addEventListener("click", async () => {
   const weatherTodayForecast = await getTodayForecastWeather();
   renderWeatherText(weather);
   renderTodayForecastWeather(weatherTodayForecast);
+  renderHourlyForecast(weatherTodayForecast);
 });
 
 //Test Button zum speichern der Daten
