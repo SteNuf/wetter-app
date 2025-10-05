@@ -1,3 +1,5 @@
+import { formatTemperature } from "./utility";
+
 //1. Local Storage erstellen:
 const LOCAL_STORAGE_KEY = "today-forecast";
 
@@ -65,15 +67,17 @@ export function renderHourlyForecast(weatherTodayForecast) {
     const hourLabel =
       index === now
         ? "Jetzt"
-        : time.getHours().toString().padStart(1, "0") + " Uhr";
+        : time.getHours().toString().padStart(2, "0") + " Uhr";
 
     const hourItem = document.createElement("div");
     hourItem.classList.add("hourItem");
 
     hourItem.innerHTML = `
      <div class="hour-time">${hourLabel}
-     <img  class="hourly-forecast__icon" src=https:${hourData.condition.icon}" />
-     <div class="hour-temp">${hourData.temp_c}°</div>
+     <img  class="hourly-forecast__icon" src="https:${
+       hourData.condition.icon
+     }" />
+     <div class="hour-temp">${Math.round(hourData.temp_c)}°</div>
      `;
     container.appendChild(hourItem);
   });
