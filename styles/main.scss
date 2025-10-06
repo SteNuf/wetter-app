@@ -5,12 +5,16 @@
 @import "detailView";
 @import "navigationBar";
 @import "todayForecast";
-@import "hourlyForecast";
 
 * {
   margin: 0px;
   padding: 0px;
 }
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
 body {
   display: flex;
   justify-content: center;

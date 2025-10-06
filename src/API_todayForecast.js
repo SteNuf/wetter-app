@@ -77,7 +77,7 @@ export function renderHourlyForecast(weatherTodayForecast) {
      <img  class="hourly-forecast__icon" src="https:${
        hourData.condition.icon
      }" />
-     <div class="hour-temp">${Math.round(hourData.temp_c)}°</div>
+     <div class="hour-temp">${formatTemperature(hourData.temp_c)}°</div>
      `;
     container.appendChild(hourItem);
   });
