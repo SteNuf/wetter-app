@@ -7,38 +7,23 @@
     <title>Die-Wetter-App</title>
   </head>
   <body>
-    <div id="loader-root">
-      <div class="loader-wrapper" id="loader">
-        <div class="lds-ring">
-          <span>Lade Wetter für ...</span>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+    <div id="app" class="background-color">
+      <div id="loader-root">
+        <div class="loader-wrapper" id="loader">
+          <div class="lds-ring">
+            <span>Lade Wetter für ...</span>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div id="app" class="background-color">
       <div class="navigation-bar">
         Navigation Bar
         <div class="navigation-bar__back-Button">Back</div>
         <div class="navigation-bar__favorite-Button">Favorit</div>
-      </div>
-
-      <div class="actually-weather">
-        <div class="actually-weather__town"></div>
-        <div class="actually-weather__temperature"></div>
-        <div class="actually-weather__condition"></div>
-        <div class="actually-weather__day">
-          <span class="actually-weather__max-temperatur"></span>
-          <span class="actually-weather__min-temperatur"></span>
-        </div>
-      </div>
-
-      <div class="today-forecast">
-        <div class="today-forecast_condition"></div>
-        <div class="today-forecast_hours"></div>
       </div>
 
       <button class="test-load-button">Laden</button>

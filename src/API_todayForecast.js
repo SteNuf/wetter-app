@@ -76,7 +76,7 @@ export function renderHourlyForecast(weatherTodayForecast) {
     const isNow = hour === nowHour;
     const hourLabel = isNow
       ? "Jetzt"
-      : hour.toString().padStart(2, "0") + " Uhr";
+      : hour.toString().padStart(2, "0") + " Uhr"; //Hilfsfunktion auslagern
 
     const hourItem = document.createElement("div");
     hourItem.classList.add("hourItem");
