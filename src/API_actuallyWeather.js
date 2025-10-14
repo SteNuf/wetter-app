@@ -8,7 +8,6 @@ let weatherApi = "";
 //2. API GetWeatherAPI() Verbindung erstellen:
 export async function getWeatherAPI() {
   const response = await fetch(
-    //"http://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=Leipzig&lang=de"
     "http://api.weatherapi.com/v1/current.json?key=cab870990fda438db75125235251909&q=Leipzig&lang=de"
   );
   const body = await response.json();
