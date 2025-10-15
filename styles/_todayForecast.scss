@@ -2,7 +2,7 @@
   border: none;
   background-color: $secondary-bgcolor; //rgba(255, 250, 250, 0.2);
   margin-top: 2rem;
-  font-family: "INTER", sans-serif;
+
   @include card();
 
   &_condition {

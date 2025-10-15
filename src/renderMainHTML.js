@@ -18,7 +18,8 @@ export function loadDetailView() {
 }
 
 function renderDetailView() {
-  rootElement.innerHTML = getHeaderHtml() + getHourlyForcast();
+  rootElement.innerHTML =
+    getHeaderHtml() + getHourlyForcast() + getForecastDays();
 
   const testLoadButton = document.querySelector(".test-load-button");
   const testSaveButton = document.querySelector(".test-save-button");
@@ -49,7 +50,7 @@ function getHeaderHtml() {
       <div class="navigation-bar">
         Navigation Bar
         <div class="navigation-bar__back-Button">Back</div>
-        <div class="navigation-bar__favorite-Button">Favorit</div>
+        <div class="navigation-bar__favorite-Button">Favourit</div>
       </div>
 
   
@@ -76,4 +77,40 @@ function getHourlyForcast() {
         <div class="today-forecast_hours"></div>
     </div>
     `;
+}
+
+function getForecastDays() {
+  return `
+  
+   <div class="forecast">
+       <div class="forecast__text">Vorhersage für die nächsten 3 Tage:</div>
+
+        <div class="forecast-days">
+          <div class="forecast-three-day">
+            Heute
+            <div class="forecast-three-day__icon"></div>
+            <div class="forecast-three-day__max-temp">H:10°</div>
+            <div class="forecast-three-day__min-temp">T:1</div>
+            <div class="forecast-three-day__wind">Wind: km/h</div>
+          </div>
+
+          <div class="forecast-three-day">
+            Do
+            <div class="forecast-three-day__icon"></div>
+            <div class="forecast-three-day__max-temp">H:10°</div>
+            <div class="forecast-three-day__min-temp">T:1</div>
+            <div class="forecast-three-day__wind">Wind: km/h</div>
+          </div>
+
+          <div class="forecast-three-day">
+          Fr
+            <div class="forecast-three-day__icon"></div>
+            <div class="forecast-three-temp"> H:10°</div>
+            <div class="forecast-three-day__min-temp"> T:1</div>
+            <div class="forecast-three-day__wind">Wind: km/h</div>
+          </div>
+        </div>
+      </div>
+   
+  `;
 }

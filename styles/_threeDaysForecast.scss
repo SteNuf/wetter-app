@@ -1,0 +1,42 @@
+.forecast {
+  display: flex;
+  flex-direction: column;
+  font-family: "INTER", sans-serif;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: $secondary-bgcolor;
+  box-shadow: 1px 1px 5px #0000004d;
+  border: none;
+  border-radius: 6px;
+
+  &__text {
+    color: $font-color;
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 1rem;
+  }
+}
+
+.forecast-three-days {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.forecast-three-day {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  gap: 1rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
