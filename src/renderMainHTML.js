@@ -12,6 +12,11 @@ import {
   renderTodayForecastWeather,
   saveTodayForecastToLocalStorage,
 } from "./API_todayForecast.js";
+import {
+  getThreeDaysForecastWeather,
+  renderThreeDaysForecast,
+  saveThreeDaysForecastToLocalStorage,
+} from "./API_daysForecast.js";
 
 export function loadDetailView() {
   renderDetailView();
@@ -29,9 +34,11 @@ function renderDetailView() {
     loadDetailView();
     const weather = await getWeatherAPI();
     const weatherTodayForecast = await getTodayForecastWeather();
+    const weatherThreeDaysForecast = await getThreeDaysForecastWeather();
     renderWeatherText(weather);
     renderTodayForecastWeather(weatherTodayForecast);
     renderHourlyForecast(weatherTodayForecast);
+    renderThreeDaysForecast(weatherThreeDaysForecast);
   });
 
   //Test Button zum speichern der Daten
@@ -41,6 +48,7 @@ function renderDetailView() {
       renderWeatherText(saveWeather);
     }
     const saveTodayForecast = await saveTodayForecastToLocalStorage();
+    const saveThreeDaysForecast = await saveThreeDaysForecastToLocalStorage();
   });
 }
 
@@ -84,32 +92,7 @@ function getForecastDays() {
   
    <div class="forecast">
        <div class="forecast__text">Vorhersage für die nächsten 3 Tage:</div>
-
-        <div class="forecast-days">
-          <div class="forecast-three-day">
-            Heute
-            <div class="forecast-three-day__icon"></div>
-            <div class="forecast-three-day__max-temp">H:10°</div>
-            <div class="forecast-three-day__min-temp">T:1</div>
-            <div class="forecast-three-day__wind">Wind: km/h</div>
-          </div>
-
-          <div class="forecast-three-day">
-            Do
-            <div class="forecast-three-day__icon"></div>
-            <div class="forecast-three-day__max-temp">H:10°</div>
-            <div class="forecast-three-day__min-temp">T:1</div>
-            <div class="forecast-three-day__wind">Wind: km/h</div>
-          </div>
-
-          <div class="forecast-three-day">
-          Fr
-            <div class="forecast-three-day__icon"></div>
-            <div class="forecast-three-temp"> H:10°</div>
-            <div class="forecast-three-day__min-temp"> T:1</div>
-            <div class="forecast-three-day__wind">Wind: km/h</div>
-          </div>
-        </div>
+        <div class="forecast-days"></div>
       </div>
    
   `;

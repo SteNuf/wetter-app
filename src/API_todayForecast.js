@@ -15,6 +15,7 @@ export async function getTodayForecastWeather() {
   weatherTodayForcastAPI = body;
 
   console.log(body);
+  console.log(weatherTodayForcastAPI);
 
   const forecastDays = body.forecast.forecastday;
   const currentEpoch =
@@ -37,7 +38,7 @@ export function saveTodayForecastToLocalStorage(saveTodayForecast) {
     JSON.stringify(saveTodayForecastData)
   );
 
-  console.log(saveTodayForecastToLocalStorage);
+  console.log(saveTodayForecastData);
 }
 
 //4. API aus LocalStorage herausgeben:
