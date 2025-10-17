@@ -1,3 +1,5 @@
+import { getThreeDaysFromNow } from "./utility";
+
 //1. Loacal Storage erstellen:
 const LOCAL_STORAGE_KEY = "threeDaysForecast";
 
@@ -15,12 +17,17 @@ export async function getThreeDaysForecastWeather() {
   console.log(threeDaysForecastAPI);
 
   const forecastDays = body.forecast.forecastday;
+  const currentDayEpoch =
+    body.current?.last_updated_epoch ?? body.location?.localtime_epoch;
+
+  const daysForecast = getThreeDaysFromNow(forecastDays, currentDayEpoch);
 
   return {
     condition: forecastDays[0].day.condition.icon,
     maxTemp: forecastDays[0].day.maxtemp_c,
     minTemp: forecastDays[0].day.mintemp_c,
-    wind: forecastDays[0].day.maxwind_kph,
+    daysForecast,
+    currentDayEpoch,
   };
 }
 
@@ -47,15 +54,20 @@ export function getThreeDaysForecastFromLocalStorage() {
 export function renderThreeDaysForecast(weatherThreeDaysForecast) {
   const container = document.querySelector(".forecast-days");
 
-  const iconItem = document.createElement("div");
-  iconItem.classList.add("forecast-three-day");
+  const days = weatherThreeDaysForecast.daysForecast || [];
 
-  iconItem.innerHTML = `
-<div class="forecast-three-day__icon">
-<img src="https:${weatherThreeDaysForecast.condition}" alt="Wetter-Icon">
-            <div class="forecast-three-day__max-temp">H:${weatherThreeDaysForecast.maxTemp}</div>
-            <div class="forecast-three-day__min-temp">T:${weatherThreeDaysForecast.minTemp}</div>
-            <div class="forecast-three-day__wind">Wind: ${weatherThreeDaysForecast.wind} km/h</div>
+  days.forEach((dayData) => {
+    const item = document.createElement("div");
+    item.classList.add("forecast-three-day");
+
+    item.innerHTML = `
+  <div class="forecast-three-day__day">${dayData.label}</div>
+  <div class="forecast-three-day__icon">
+    <img  class="forecast-three-day__icon-pic" src="https:${dayData.icon}" alt="Wetter-Icon">
+            <div class="forecast-three-day__max-temp">H:${dayData.maxTemp}°</div>
+            <div class="forecast-three-day__min-temp">T:${dayData.minTemp}°</div>
+            <div class="forecast-three-day__wind">Wind: ${dayData.wind}  km/h</div>
 `;
-  container.appendChild(iconItem);
+    container.appendChild(item);
+  });
 }

@@ -26,3 +26,26 @@ export function get24HoursForecastFromNow(forecast, lastUpdateEpoch) {
   }
   return newForecast;
 }
+
+//  den aktuellen Tag als erstes bis zum dritten Tag anzeigen.
+
+export function getThreeDaysFromNow(forecast, currentEpoch) {
+  const newThreeDayForecast = forecast.map((day, index) => {
+    const date = new Date(day.date_epoch * 1000);
+
+    let label;
+    if (index === 0) {
+      label = "Heute";
+    } else {
+      label = date.toLocaleString("de-DE", { weekday: "short" });
+    }
+    return {
+      label,
+      icon: day.day.condition.icon,
+      maxTemp: formatTemperature(day.day.maxtemp_c),
+      minTemp: formatTemperature(day.day.mintemp_c),
+      wind: formatTemperature(day.day.maxwind_kph),
+    };
+  });
+  return newThreeDayForecast;
+}
