@@ -1,21 +1,18 @@
 .forecast {
-  display: flex;
-  flex-direction: column;
+  @include card();
   font-family: "INTER", sans-serif;
   margin-top: 2rem;
-  padding: 1rem;
   background-color: $secondary-bgcolor;
-  box-shadow: 1px 1px 5px #0000004d;
   border: none;
-  border-radius: 6px;
+  align-items: normal;
 
   &__text {
     color: $font-color;
     width: 100%;
-    padding-top: 0.5rem;
+    padding-top: 0.25rem;
     padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 0.25rem;
+    border-bottom: $border;
     font-size: 1rem;
   }
 }
@@ -23,7 +20,7 @@
 .forecast-three-days {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: $card-header-gap;
   width: 100%;
 }
 
@@ -31,31 +28,30 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  gap: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: $border;
+  gap: $card-header-gap;
 
   &:last-child {
     border-bottom: none;
   }
 
   &__day {
+    width: 2rem;
     display: flex;
-    text-align: left;
   }
 
   &__icon {
     display: flex;
     width: 100%;
-    gap: 1rem;
+    gap: $card-header-gap;
     text-align: center;
     align-items: center;
     justify-content: center;
   }
 
   &__icon-pic {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
   }
 }

@@ -44,7 +44,7 @@ export function getThreeDaysFromNow(forecast, currentEpoch) {
       icon: day.day.condition.icon,
       maxTemp: formatTemperature(day.day.maxtemp_c),
       minTemp: formatTemperature(day.day.mintemp_c),
-      wind: formatTemperature(day.day.maxwind_kph),
+      wind: day.day.maxwind_kph,
     };
   });
   return newThreeDayForecast;
