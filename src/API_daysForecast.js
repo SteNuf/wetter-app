@@ -28,6 +28,8 @@ export async function getThreeDaysForecastWeather() {
     minTemp: forecastDays[0].day.mintemp_c,
     daysForecast,
     currentDayEpoch,
+    sunrise: forecastDays[0].astro.sunrise,
+    sunset: forecastDays[0].astro.sunset,
   };
 }
 

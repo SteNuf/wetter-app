@@ -20,7 +20,7 @@ export async function getWeatherAPI() {
     heatIndex: formatTemperature(body.current.heatindex_c),
     dewPoint: formatTemperature(body.current.dewpoint_c),
     humidity: body.current.humidity,
-    feel: body.current.feelslike,
+    feel: body.current.feelslike_c,
     precip: body.current.precip_mm,
     uv: body.current.uv,
   };
