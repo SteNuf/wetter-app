@@ -19,6 +19,10 @@ export async function getWeatherAPI() {
     condition: body.current.condition.text,
     heatIndex: formatTemperature(body.current.heatindex_c),
     dewPoint: formatTemperature(body.current.dewpoint_c),
+    humidity: body.current.humidity,
+    feel: body.current.feelslike,
+    precip: body.current.precip_mm,
+    uv: body.current.uv,
   };
 }
 

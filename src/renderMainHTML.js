@@ -24,7 +24,7 @@ export function loadDetailView() {
 
 function renderDetailView() {
   rootElement.innerHTML =
-    getHeaderHtml() + getHourlyForcast() + getForecastDays();
+    getHeaderHtml() + getHourlyForcast() + getForecastDays() + getMiniStatic();
 
   const testLoadButton = document.querySelector(".test-load-button");
   const testSaveButton = document.querySelector(".test-save-button");
@@ -95,5 +95,45 @@ function getForecastDays() {
         <div class="forecast-days"></div>
       </div>
    
+  `;
+}
+
+function getMiniStatic() {
+  return `
+      <div class="mini-stats">  
+
+      <div class="mini-stat"> 
+        <div class="mini-stat__heading">Feuchtigkeit:</div>
+        <div class="mini-stat__value">70%</div>  
+      </div>
+
+      <div class="mini-stat"> 
+        <div class="mini-stat__heading">Gefühlt:</div>
+        <div class="mini-stat__value">10°</div>  
+      </div>
+
+     <div class="mini-stat"> 
+        <div class="mini-stat__heading">Sonnenaufgang:</div>
+        <div class="mini-stat__value">07:00 Uhr</div>  
+      </div>
+
+      <div class="mini-stat"> 
+        <div class="mini-stat__heading">Sonnenuntergang:</div>
+        <div class="mini-stat__value">19:30 Uhr</div>  
+      </div>
+
+    <div class="mini-stat"> 
+        <div class="mini-stat__heading">Niederschlag:</div>
+        <div class="mini-stat__value">mm</div>  
+    </div>
+    
+      <div class="mini-stat"> 
+        <div class="mini-stat__heading">UV-Index:</div>
+        <div class="mini-stat__value">1.9</div>  
+      </div>
+
+    
+    
+    </div>
   `;
 }
