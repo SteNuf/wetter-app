@@ -1,4 +1,3 @@
-import { getWeatherAPI } from "./API_actuallyWeather";
 import { convertTo24 } from "./utility";
 
 export function renderMiniStatic(weather, weatherThreeDaysForecast) {
