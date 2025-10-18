@@ -49,3 +49,12 @@ export function getThreeDaysFromNow(forecast, currentEpoch) {
   });
   return newThreeDayForecast;
 }
+
+export function convertTo24(timeString) {
+  const time = new Date(`1970-01-01 ${timeString}`);
+  return time.toLocaleTimeString("de-De", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}

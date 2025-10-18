@@ -40,7 +40,7 @@ function renderDetailView() {
     renderHourlyForecast(weatherTodayForecast);
     renderTodayForecastWeather(weatherTodayForecast);
     renderThreeDaysForecast(weatherThreeDaysForecast);
-    renderMiniStatic(weather);
+    renderMiniStatic(weather, weatherThreeDaysForecast);
   });
 
   //Test Button zum speichern der Daten
