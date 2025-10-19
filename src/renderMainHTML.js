@@ -18,6 +18,7 @@ import {
   saveThreeDaysForecastToLocalStorage,
 } from "./API_daysForecast.js";
 import { renderMiniStatic } from "./API_miniStatic.js";
+import { getWeatherImagPic } from "./renderImagePic.js";
 
 export function loadDetailView() {
   renderDetailView();
@@ -41,6 +42,7 @@ function renderDetailView() {
     renderTodayForecastWeather(weatherTodayForecast);
     renderThreeDaysForecast(weatherThreeDaysForecast);
     renderMiniStatic(weather, weatherThreeDaysForecast);
+    getWeatherImagPic();
   });
 
   //Test Button zum speichern der Daten

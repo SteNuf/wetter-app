@@ -23,6 +23,7 @@ export async function getWeatherAPI() {
     feel: body.current.feelslike_c,
     precip: body.current.precip_mm,
     uv: body.current.uv,
+    pic: body.current.code,
   };
 }
 
