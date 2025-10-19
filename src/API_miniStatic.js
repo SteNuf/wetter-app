@@ -1,5 +1,6 @@
 import { convertTo24 } from "./utility";
 
+// render der mini Stat in HTML
 export function renderMiniStatic(weather, weatherThreeDaysForecast) {
   const container = document.querySelector(".mini-stats");
 
