@@ -1,25 +1,41 @@
 import { getConditionImagePath } from "./schools_MVdSxpebVbCje6Sd8KoN_files_conditions";
 
 export function getWeatherImagPic() {
-  const container = document.querySelector(".background-color");
-  container.style.backgroundimage =
+  const containerBackground = document.querySelector(".background-color");
+  const containerHeader = document.querySelector(".actually-weather");
+  const containerTodayForecast = document.querySelector(".today-forecast");
+  const containerThreeDaysForecast = document.querySelector(".forecast");
+  const containerMiniStats = document.querySelector(".mini-stats");
+  //const containerMiniStat = document.querySelector(".mini-stat");
+
+  containerBackground.style.backgroundImage =
     "url('./wetter-app/conditionImages/day/cloudy_day.jpg')";
+  containerBackground.style.backgroundSize = "cover";
+  containerBackground.style.backgroundPosition = "center";
+  containerBackground.style.backgroundRepeat = "no-repeat";
 
-  // const container = document.querySelector("#app");
+  containerHeader.style.backgroundImage =
+    "url('./wetter-app/conditionImages/day/cloudy_day.jpg')";
+  containerHeader.style.backgroundSize = "cover";
+  containerHeader.style.backgroundPosition = "center";
 
-  // const weatherImagePicElement = document.createElement("div");
-  // weatherImagePicElement.classList.add("imag-weather-pic");
+  containerTodayForecast.style.backgroundImage =
+    "url('./wetter-app/conditionImages/day/cloudy_day.jpg')";
+  containerTodayForecast.style.backgroundSize = "cover";
+  containerTodayForecast.style.backgroundPosition = "center";
 
-  // const imagePath = getConditionImagePath(weather.pic);
+  containerThreeDaysForecast.style.backgroundImage =
+    "url('./wetter-app/conditionImages/day/cloudy_day.jpg')";
+  containerThreeDaysForecast.style.backgroundSize = "cover";
+  containerThreeDaysForecast.style.backgroundPosition = "center";
 
-  // weatherImagePicElement.innerHTML = `
-  //  <div class="background-pic"
-  //  style=background-image: url("${imagePath}")
-  //  )}
-  // `;
+  containerMiniStats.style.backgroundImage =
+    "url('./wetter-app/conditionImages/day/cloudy_day.jpg')";
+  containerMiniStats.style.backgroundSize = "cover";
+  containerMiniStats.style.backgroundPosition = "center";
 
-  // container.appendChild(weatherImagePicElement);
-
-  // console.log(weatherImagePicElement);
-  // console.log("Wetterbild geladen:", imagePath);
+  //containerMiniStat.style.backgroundImage =
+  ("url('./wetter-app/conditionImages/day/cloudy_day.jpg')");
+  containerMiniStat.style.backgroundSize = "cover";
+  containerMiniStat.style.backgroundPosition = "center";
 }
