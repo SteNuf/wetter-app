@@ -1,7 +1,6 @@
 .mini-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  // background-color: $primary-bgcolor;
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -9,7 +8,6 @@
 .mini-stat {
   @include card();
   gap: 0.5rem;
-  //background-color: $secondary-bgcolor;
 
   &__heading {
     font-size: 1rem;

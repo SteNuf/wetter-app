@@ -42,7 +42,7 @@ function renderDetailView() {
     renderTodayForecastWeather(weatherTodayForecast);
     renderThreeDaysForecast(weatherThreeDaysForecast);
     renderMiniStatic(weather, weatherThreeDaysForecast);
-    getWeatherImagPic();
+    getWeatherImagPic(weather);
   });
 
   //Test Button zum speichern der Daten
