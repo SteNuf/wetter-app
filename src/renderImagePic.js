@@ -14,9 +14,9 @@ export function getWeatherImagPic(weather) {
   const containers = [
     ".background-color",
     ".actually-weather",
-    ".today-forecast",
-    ".forecast",
-    ".mini-stats",
+    //".today-forecast",
+    //".forecast",
+    //".mini-stats",
   ];
 
   containers.forEach((selector) => {
@@ -28,8 +28,4 @@ export function getWeatherImagPic(weather) {
       element.style.backgroundRepeat = "no-repeat";
     }
   });
-
-  console.log("Wettercode:", weather.pic);
-  console.log("ImagePath:", imagePath);
-  console.log("Fullpath:", fullImagePath);
 }
