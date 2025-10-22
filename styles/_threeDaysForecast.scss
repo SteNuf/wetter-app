@@ -16,6 +16,9 @@
     margin-bottom: 0.25rem;
     border-bottom: $border;
     font-size: 1rem;
+    backdrop-filter: blur(50px);
+    //text-shadow: $text-shadow;
+    // box-shadow: $box-shadow;
   }
 }
 
@@ -24,7 +27,6 @@
   flex-direction: column;
   gap: $card-header-gap;
   width: 100%;
-  //backdrop-filter: blur(150px);
 }
 
 .forecast-three-day {
@@ -35,6 +37,7 @@
   padding-bottom: 0.5rem;
   border-bottom: $border;
   gap: $card-header-gap;
+  backdrop-filter: blur(20px);
   //backdrop-filter: blur(250px);
 
   &:last-child {
