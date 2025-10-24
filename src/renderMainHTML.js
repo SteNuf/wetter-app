@@ -26,7 +26,11 @@ export function loadDetailView() {
 
 function renderDetailView() {
   rootElement.innerHTML =
-    getHeaderHtml() + getHourlyForcast() + getForecastDays() + getMiniStatic();
+    getMainMenuHtml() +
+    getHeaderHtml() +
+    getHourlyForcast() +
+    getForecastDays() +
+    getMiniStatic();
 
   const testLoadButton = document.querySelector(".test-load-button");
   const testSaveButton = document.querySelector(".test-save-button");
@@ -54,6 +58,27 @@ function renderDetailView() {
     const saveTodayForecast = await saveTodayForecastToLocalStorage();
     const saveThreeDaysForecast = await saveThreeDaysForecastToLocalStorage();
   });
+}
+
+export function getMainMenuHtml() {
+  return ` 
+  
+    <div class="main-menu">
+      <div class="main-menu__heading">Wetter
+      <button class="main-menu__edit">Bearbeiten</button>
+    </div>
+    <div class="main-menu__search-bar">
+          <input
+            type="text"
+            class="main-menu__search-input"
+            placeholder="Nach Stadt suchen..."
+          />
+          <div
+            class="main-menu__search-results main-menu__search-results--hidden"
+          ></div>
+       </div>
+        Noch keine Faroriten gespeichert.
+      </div>`;
 }
 
 function getHeaderHtml() {
