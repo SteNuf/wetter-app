@@ -7,7 +7,25 @@
     <title>Die-Wetter-App</title>
   </head>
   <body>
-    <div id="app" class="background-color"></div>
+    <div id="app" class="background-color">
+      <div class="main-menu">
+        <div class="main-menu__heading">
+          Die-Wetter-App
+          <button class="main-menu__edit">Bearbeiten</button>
+        </div>
+        <div class="main-menu__search-bar">
+          <input
+            type="text"
+            class="main-menu__search-input"
+            placeholder="Nach Stadt suchen..."
+          />
+          <div
+            class="main-menu__search-results main-menu__search-results--hidden"
+          ></div>
+        </div>
+        Noch keine Faroriten gespeichert.
+      </div>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
