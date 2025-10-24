@@ -24,6 +24,7 @@ export async function getWeatherAPI() {
     precip: body.current.precip_mm,
     uv: body.current.uv,
     pic: body.current.condition.code,
+    isDay: body.current.is_day,
   };
 }
 
