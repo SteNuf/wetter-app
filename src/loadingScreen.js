@@ -1,6 +1,6 @@
-import { rootElement } from "./main";
+import { rootElement } from "./domElements.js";
 
-export async function renderLoadingScreen(message = "Lade...Test") {
+export async function renderLoadingScreen(message = "Lade...") {
   //  const weatherLoadingData = await weather;
   renderLoadingView(message);
 }

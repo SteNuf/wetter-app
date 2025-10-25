@@ -1,6 +1,5 @@
-import { rootElement } from "./main";
 import {
-  getWeatherAPI,
+  getActuallyWeatherAPI,
   saveWeatherToLocalStorage,
   getWeatherFromLocalStorage,
   renderWeatherText,
@@ -19,35 +18,36 @@ import {
 } from "./API_daysForecast.js";
 import { renderMiniStatic } from "./API_miniStatic.js";
 import { getWeatherImagPic } from "./renderImagePic.js";
+import { renderLoadingScreen } from "./loadingScreen.js";
+import { rootElement } from "./domElements.js";
 
-export function loadDetailView() {
-  renderDetailView();
+// export function loadDetailView() {
+//   renderDetailView();
+// }
+
+export function loadMainHTML() {
+  rootElement.innerHTML = getMainMenuHtml();
+
+  const inputElement = document.querySelector(".main-menu__search-input");
+
+  inputElement.addEventListener("keydown", async (event) => {
+    if (event.key === "Enter") {
+      const location = inputElement.value.trim() || "Leipzig";
+      renderLoadingScreen();
+      await renderDetailView(location);
+    }
+  });
 }
 
-function renderDetailView() {
+async function renderDetailView(location) {
   rootElement.innerHTML =
-    getMainMenuHtml() +
-    getHeaderHtml() +
-    getHourlyForcast() +
-    getForecastDays() +
-    getMiniStatic();
+    getHeaderHtml() + getHourlyForcast() + getForecastDays() + getMiniStatic();
 
-  const testLoadButton = document.querySelector(".test-load-button");
   const testSaveButton = document.querySelector(".test-save-button");
 
-  // //Test Button zum Laden der API Daten
-  testLoadButton.addEventListener("click", async () => {
-    loadDetailView();
-    const weather = await getWeatherAPI();
-    const weatherTodayForecast = await getTodayForecastWeather();
-    const weatherThreeDaysForecast = await getThreeDaysForecastWeather();
-    renderWeatherText(weather);
-    renderHourlyForecast(weatherTodayForecast);
-    renderTodayForecastWeather(weatherTodayForecast);
-    renderThreeDaysForecast(weatherThreeDaysForecast);
-    renderMiniStatic(weather, weatherThreeDaysForecast);
-    getWeatherImagPic(weather);
-  });
+  // Input Eingabefeld
+
+  // loadDetailView();
 
   //Test Button zum speichern der Daten
   testSaveButton.addEventListener("click", async () => {
@@ -58,9 +58,20 @@ function renderDetailView() {
     const saveTodayForecast = await saveTodayForecastToLocalStorage();
     const saveThreeDaysForecast = await saveThreeDaysForecastToLocalStorage();
   });
+
+  const weather = await getActuallyWeatherAPI(location);
+  const weatherTodayForecast = await getTodayForecastWeather(location);
+  const weatherThreeDaysForecast = await getThreeDaysForecastWeather(location);
+
+  renderWeatherText(weather);
+  renderHourlyForecast(weatherTodayForecast);
+  renderTodayForecastWeather(weatherTodayForecast);
+  renderThreeDaysForecast(weatherThreeDaysForecast);
+  renderMiniStatic(weather, weatherThreeDaysForecast);
+  getWeatherImagPic(weather);
 }
 
-export function getMainMenuHtml() {
+function getMainMenuHtml() {
   return ` 
   
     <div class="main-menu">
@@ -91,7 +102,7 @@ function getHeaderHtml() {
       </div>
 
   
-      <button class="test-load-button">Laden</button>
+      
       <button class="test-save-button">Save</button>
     
      <div class="actually-weather">

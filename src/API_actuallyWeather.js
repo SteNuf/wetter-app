@@ -5,10 +5,10 @@ const LOCAL_STORAGE_KEY = "wetter-app";
 
 let weatherApi = "";
 
-//2. API GetWeatherAPI() Verbindung erstellen:
-export async function getWeatherAPI() {
+//2. API getActuallyWeatherAPI() Verbindung erstellen:
+export async function getActuallyWeatherAPI(location) {
   const response = await fetch(
-    "http://api.weatherapi.com/v1/current.json?key=cab870990fda438db75125235251909&q=Leipzig&lang=de"
+    `http://api.weatherapi.com/v1/current.json?key=cab870990fda438db75125235251909&q=${location}&days=3&lang=de`
   );
   const body = await response.json();
   weatherApi = body;

@@ -22,10 +22,19 @@
     font-weight: 700;
     cursor: pointer;
     margin-top: 0.5rem;
+    border: none;
+  }
+
+  &__search-bar {
+    width: 100%;
+    position: relative;
   }
 
   &__search-input {
+    box-sizing: border-box;
     width: 100%;
-    position: relative;
+    padding: 0.75rem;
+    border-radius: $border-radius;
+    border: none;
   }
 }

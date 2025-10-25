@@ -5,10 +5,10 @@ const LOCAL_STORAGE_KEY = "threeDaysForecast";
 
 let threeDaysForecastAPI = "";
 
-//2. API GetWeatherAPI() Verbindung erstellen:
-export async function getThreeDaysForecastWeather() {
+//2. API getActuallyWeatherAPI() Verbindung erstellen:
+export async function getThreeDaysForecastWeather(location) {
   const response = await fetch(
-    "http://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=Leipzig&days=3&lang=de"
+    `http://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=${location}&days=3&lang=de`
   );
 
   const body = await response.json();

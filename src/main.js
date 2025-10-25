@@ -1,23 +1,13 @@
-import {
-  getWeatherAPI,
-  saveWeatherToLocalStorage,
-  getWeatherFromLocalStorage,
-  renderWeatherText,
-} from "./API_actuallyWeather";
 import "../styles/main.scss";
+import { getWeatherFromLocalStorage } from "./API_actuallyWeather";
 import { renderLoadingScreen } from "./loadingScreen.js";
-import {
-  getTodayForecastWeather,
-  renderHourlyForecast,
-  renderTodayForecastWeather,
-  saveTodayForecastToLocalStorage,
-} from "./API_todayForecast.js";
-import { loadDetailView } from "./renderMainHTML.js";
-
-export const rootElement = document.getElementById("app");
+import { loadMainHTML } from "./renderMainHTML.js";
+import { rootElement } from "./domElements.js";
 
 let actuallyWeatherData = "";
 let saveWeatherList = getWeatherFromLocalStorage();
 
 renderLoadingScreen();
-loadDetailView();
+loadMainHTML();
+
+//loadDetailView();
