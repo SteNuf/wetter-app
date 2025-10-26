@@ -90,7 +90,7 @@ function getMainMenuCityList() {
   
   <div class="main-menu__city-list">
         <div class="city-wrapper">
-          <div class="city-wrapper__delete" data-city-id="1"></div>
+          <div class="city-wrapper__delete city-wrapper__delete--show " data-city-id="1"></div>
           <div class="city" data-city-name="2">
             <div class="city-left-colum">
               <h2 class="city__name">Berlin</h2>

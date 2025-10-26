@@ -1,0 +1,33 @@
+.main-menu__city-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.city-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  &__delete {
+    display: none; // Löschbutton soll hier versteckt werden.
+    width: 2rem;
+    cursor: pointer;
+    color: red;
+    filter: drop-shadow(1px 1px 5px #000);
+  }
+}
+
+.city {
+  display: grid;
+  align-items: center;
+  padding: 1rem;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  grid-template-columns: max-content max-content;
+  justify-content: space-between;
+  cursor: pointer;
+  flex-grow: 1;
+  text-shadow: $text-shadow;
+  background-position: 50% 25%;
+}
