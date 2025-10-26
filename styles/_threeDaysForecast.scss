@@ -2,11 +2,9 @@
   @include card();
   font-family: "INTER", sans-serif;
   margin-top: 2rem;
-  //background-color: $secondary-bgcolor;
   border: none;
   align-items: normal;
-  //backdrop-filter: blur(50px);
-  //-webkit-backdrop-filter: blur(50px);
+  text-shadow: $text-shadow;
 
   &__text {
     color: $font-color;
@@ -17,8 +15,6 @@
     border-bottom: $border;
     font-size: 1rem;
     backdrop-filter: blur(50px);
-    //text-shadow: $text-shadow;
-    // box-shadow: $box-shadow;
   }
 }
 
@@ -38,7 +34,6 @@
   border-bottom: $border;
   gap: $card-header-gap;
   backdrop-filter: blur(20px);
-  //backdrop-filter: blur(250px);
 
   &:last-child {
     border-bottom: none;

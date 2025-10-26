@@ -21,12 +21,9 @@ import { getWeatherImagPic } from "./renderImagePic.js";
 import { renderLoadingScreen } from "./loadingScreen.js";
 import { rootElement } from "./domElements.js";
 
-// export function loadDetailView() {
-//   renderDetailView();
-// }
-
+// StartSeite mit Input Eingabefeld
 export function loadMainHTML() {
-  rootElement.innerHTML = getMainMenuHtml();
+  rootElement.innerHTML = getMainMenuHtml() + getMainMenuCityList();
 
   const inputElement = document.querySelector(".main-menu__search-input");
 
@@ -44,10 +41,6 @@ async function renderDetailView(location) {
     getHeaderHtml() + getHourlyForcast() + getForecastDays() + getMiniStatic();
 
   const testSaveButton = document.querySelector(".test-save-button");
-
-  // Input Eingabefeld
-
-  // loadDetailView();
 
   //Test Button zum speichern der Daten
   testSaveButton.addEventListener("click", async () => {
@@ -75,21 +68,47 @@ function getMainMenuHtml() {
   return ` 
   
     <div class="main-menu">
-      <div class="main-menu__heading">Wetter
-      <button class="main-menu__edit">Bearbeiten</button>
-    </div>
-    <div class="main-menu__search-bar">
+       <div class="main-menu__heading">Wetter
+        <button class="main-menu__edit">Bearbeiten</button>
+       </div>
+       <div class="main-menu__search-bar">
           <input
             type="text"
             class="main-menu__search-input"
             placeholder="Nach Stadt suchen..."
           />
-          <div
+            <div
             class="main-menu__search-results main-menu__search-results--hidden"
-          ></div>
-       </div>
+            ></div>
+        </div>
         Noch keine Faroriten gespeichert.
-      </div>`;
+     </div>`;
+}
+
+function getMainMenuCityList() {
+  return `
+  
+  <div class="main-menu__city-list">
+        <div class="city-wrapper">
+          <div class="city-wrapper__delete" data-city-id="1"></div>
+          <div class="city" data-city-name="2">
+            <div class="city-left-colum">
+              <h2 class="city__name">Berlin</h2>
+              <div class="city__country">Germany</div>
+              <div class="city__condition">Regen</div>
+            </div>
+            <div class="city-right-colum">
+              <div class="city__temperature">11°</div>
+              <div class="city__min-max-temperature">H:11 T:5°</div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+  
+  
+  `;
 }
 
 function getHeaderHtml() {

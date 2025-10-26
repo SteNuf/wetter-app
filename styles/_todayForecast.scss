@@ -2,12 +2,13 @@
   border: none;
   //background-color: $secondary-bgcolor; //rgba(255, 250, 250, 0.2);
   margin-top: 2rem;
-  //backdrop-filter: blur(50px);
+  text-shadow: $text-shadow; //backdrop-filter: blur(50px);
   @include card();
 
   &_condition {
     @include cardheader();
     backdrop-filter: blur(50px);
+    text-shadow: $text-shadow;
   }
 
   &_hours {
@@ -16,6 +17,7 @@
     overflow-x: scroll;
     gap: 0.5rem;
     backdrop-filter: blur(50px);
+    //text-shadow: $text-shadow;
   }
 }
 

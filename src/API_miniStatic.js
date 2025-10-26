@@ -49,7 +49,7 @@ export function renderMiniStatic(weather, weatherThreeDaysForecast) {
   miniStatPrecipElement.innerHTML = `
   
         <div class="mini-stat__heading">Niederschlag:</div>
-        <div class="mini-stat__value">${weather.precip}mm </div>
+        <div class="mini-stat__value">${weather.precip} mm </div>
   `;
 
   miniStatUvElement.innerHTML = `

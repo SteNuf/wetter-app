@@ -9,5 +9,3 @@ let saveWeatherList = getWeatherFromLocalStorage();
 
 renderLoadingScreen();
 loadMainHTML();
-
-//loadDetailView();

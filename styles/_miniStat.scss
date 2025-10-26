@@ -3,6 +3,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-top: 2rem;
+  text-shadow: $text-shadow;
 }
 
 .mini-stat {
@@ -11,12 +12,11 @@
 
   &__heading {
     font-size: 1rem;
-    //text-shadow: $text-shadow;
-    //box-shadow: $box-shadow;
+
+    box-shadow: $box-shadow;
   }
 
   &__value {
     font-size: 1.5rem;
-    //text-shadow: $text-shadow;
   }
 }
