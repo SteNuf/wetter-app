@@ -1,7 +1,7 @@
 import { formatTemperature } from "./utility";
 
 //1. Local Storage erstellen:
-const LOCAL_STORAGE_KEY = "wetter-app";
+const LOCAL_STORAGE_KEY = "actually-weather";
 
 let weatherApi = "";
 
@@ -29,13 +29,16 @@ export async function getActuallyWeatherAPI(location) {
 }
 
 //3. API in LocalStorage speichern:
-export function saveWeatherToLocalStorage() {
-  const saveWeatherData = weatherApi;
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(saveWeatherData));
+export function saveActuallyWeatherToLocalStorage() {
+  const saveActuallyWeatherData = weatherApi;
+  localStorage.setItem(
+    LOCAL_STORAGE_KEY,
+    JSON.stringify(saveActuallyWeatherData)
+  );
 }
 
 //4. API aus LocalStorage herausgeben:
-export function getWeatherFromLocalStorage() {
+export function getActuallyWeatherFromLocalStorage() {
   const data = localStorage.getItem(LOCAL_STORAGE_KEY);
   if (!data) {
     return [];

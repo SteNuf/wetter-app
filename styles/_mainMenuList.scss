@@ -1,33 +1,71 @@
 .main-menu__city-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 5rem;
+  width: 100%;
 }
 
 .city-wrapper {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
-
-  &__delete {
-    display: none; // Löschbutton soll hier versteckt werden.
-    width: 2rem;
-    cursor: pointer;
-    color: red;
-    filter: drop-shadow(1px 1px 5px #000);
-  }
+  width: 100%;
 }
 
+.city-wrapper__delete {
+  display: none;
+  width: 2rem;
+  filter: drop-shadow(1px 1px 5px #000);
+  color: #f13c3c;
+  cursor: pointer;
+}
 .city {
-  display: grid;
+  width: 94%;
+  flex-direction: column;
   align-items: center;
   padding: 1rem;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
+  border-radius: 6px;
+  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(50px);
+  box-shadow: 1px 1px 5px #0000004d;
+  display: grid;
   grid-template-columns: max-content max-content;
   justify-content: space-between;
   cursor: pointer;
   flex-grow: 1;
-  text-shadow: $text-shadow;
+  //background-image: linear-gradient(0deg, #0003, #0003), var(--condition-image);
+  background-size: cover;
   background-position: 50% 25%;
+  text-shadow: 1px 1px 5px #000;
+}
+
+.city__left-column {
+  height: 100%;
+}
+
+.city__name {
+  font-weight: 400;
+  font-size: 1.5rem;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.city__condition {
+  margin-top: 2rem;
+}
+
+.city__right-column {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.city__temperature {
+  font-size: 2.5rem;
+  font-weight: 300;
+  text-align: right;
 }

@@ -1,11 +1,13 @@
 import "../styles/main.scss";
-import { getWeatherFromLocalStorage } from "./API_actuallyWeather";
+import { getActuallyWeatherFromLocalStorage } from "./API_actuallyWeather";
 import { renderLoadingScreen } from "./loadingScreen.js";
-import { loadMainHTML } from "./renderMainHTML.js";
-import { rootElement } from "./domElements.js";
 
-let actuallyWeatherData = "";
-let saveWeatherList = getWeatherFromLocalStorage();
+import { rootElement } from "./domElements.js";
+import { loadMainHTML, renderMainMenu } from "./renderMainMenu.js";
 
 renderLoadingScreen();
 loadMainHTML();
+
+//renderLoadingScreen();
+//renderMainMenu();
+//loadMainHTML();

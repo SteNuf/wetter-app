@@ -1,9 +1,9 @@
 import {
   getActuallyWeatherAPI,
-  saveWeatherToLocalStorage,
-  getWeatherFromLocalStorage,
+  saveActuallyWeatherToLocalStorage,
+  getActuallyWeatherFromLocalStorage,
   renderWeatherText,
-} from "./API_actuallyWeather";
+} from "./API_actuallyWeather.js";
 
 import {
   getTodayForecastWeather,
@@ -21,32 +21,20 @@ import { getWeatherImagPic } from "./renderImagePic.js";
 import { renderLoadingScreen } from "./loadingScreen.js";
 import { rootElement } from "./domElements.js";
 
-// StartSeite mit Input Eingabefeld
-export function loadMainHTML() {
-  rootElement.innerHTML = getMainMenuHtml() + getMainMenuCityList();
-
-  const inputElement = document.querySelector(".main-menu__search-input");
-
-  inputElement.addEventListener("keydown", async (event) => {
-    if (event.key === "Enter") {
-      const location = inputElement.value.trim() || "Leipzig";
-      renderLoadingScreen();
-      await renderDetailView(location);
-    }
-  });
-}
-
-async function renderDetailView(location) {
+export async function renderDetailView(location) {
   rootElement.innerHTML =
-    getHeaderHtml() + getHourlyForcast() + getForecastDays() + getMiniStatic();
+    getHeaderHtml() +
+    getHourlyForcastHtml() +
+    getForecastDaysHtml() +
+    getMiniStaticHtml();
 
   const testSaveButton = document.querySelector(".test-save-button");
 
   //Test Button zum speichern der Daten
   testSaveButton.addEventListener("click", async () => {
-    const saveWeather = await saveWeatherToLocalStorage();
-    if (saveWeather) {
-      renderWeatherText(saveWeather);
+    const saveActuallyWeather = await saveActuallyWeatherToLocalStorage();
+    if (saveActuallyWeather) {
+      renderWeatherText(saveActuallyWeather);
     }
     const saveTodayForecast = await saveTodayForecastToLocalStorage();
     const saveThreeDaysForecast = await saveThreeDaysForecastToLocalStorage();
@@ -64,53 +52,6 @@ async function renderDetailView(location) {
   getWeatherImagPic(weather);
 }
 
-function getMainMenuHtml() {
-  return ` 
-  
-    <div class="main-menu">
-       <div class="main-menu__heading">Wetter
-        <button class="main-menu__edit">Bearbeiten</button>
-       </div>
-       <div class="main-menu__search-bar">
-          <input
-            type="text"
-            class="main-menu__search-input"
-            placeholder="Nach Stadt suchen..."
-          />
-            <div
-            class="main-menu__search-results main-menu__search-results--hidden"
-            ></div>
-        </div>
-        Noch keine Faroriten gespeichert.
-     </div>`;
-}
-
-function getMainMenuCityList() {
-  return `
-  
-  <div class="main-menu__city-list">
-        <div class="city-wrapper">
-          <div class="city-wrapper__delete city-wrapper__delete--show " data-city-id="1"></div>
-          <div class="city" data-city-name="2">
-            <div class="city-left-colum">
-              <h2 class="city__name">Berlin</h2>
-              <div class="city__country">Germany</div>
-              <div class="city__condition">Regen</div>
-            </div>
-            <div class="city-right-colum">
-              <div class="city__temperature">11°</div>
-              <div class="city__min-max-temperature">H:11 T:5°</div>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-  
-  
-  
-  `;
-}
-
 function getHeaderHtml() {
   return `
 
@@ -123,7 +64,9 @@ function getHeaderHtml() {
   
       
       <button class="test-save-button">Save</button>
-    
+      <button class="test-save-button-image">Load to main</button>
+
+
      <div class="actually-weather">
         <div class="actually-weather__town"></div>
         <div class="actually-weather__temperature"></div>
@@ -137,7 +80,7 @@ function getHeaderHtml() {
     `;
 }
 
-function getHourlyForcast() {
+function getHourlyForcastHtml() {
   return `
    <div class="today-forecast">
         <div class="today-forecast_condition"></div>
@@ -146,7 +89,7 @@ function getHourlyForcast() {
     `;
 }
 
-function getForecastDays() {
+function getForecastDaysHtml() {
   return `
   
    <div class="forecast">
@@ -157,7 +100,7 @@ function getForecastDays() {
   `;
 }
 
-function getMiniStatic() {
+function getMiniStaticHtml() {
   return `
       <div class="mini-stats"></div>
  `;
