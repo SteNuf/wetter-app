@@ -9,5 +9,5 @@ renderLoadingScreen();
 loadMainHTML();
 
 //renderLoadingScreen();
-//renderMainMenu();
+renderMainMenu();
 //loadMainHTML();

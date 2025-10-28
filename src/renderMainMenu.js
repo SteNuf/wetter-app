@@ -3,6 +3,7 @@ import { rootElement } from "./domElements.js";
 import { renderDetailView } from "./renderDetailHtml.js";
 
 export function loadMainMenu() {
+  rootElement.classList.remove("background-color");
   renderLoadingScreen("Lade Übersicht...");
 }
 
@@ -89,11 +90,21 @@ export function getMainMenuCityListHtml() {
 
 function registerEventListeners() {
   const cities = document.querySelectorAll(".city");
+  console.log(cities);
   cities.forEach((city) => {
     city.addEventListener("click", () => {
       const cityName = city.getAttribute("data-city-name");
-
+      console.log(cityName);
       renderDetailView(cityName);
     });
+  });
+  const inputElement = document.querySelector(".main-menu__search-input");
+
+  inputElement.addEventListener("keydown", async (event) => {
+    if (event.key === "Enter") {
+      const location = inputElement.value.trim() || "Leipzig";
+      renderLoadingScreen();
+      await renderDetailView(location);
+    }
   });
 }
