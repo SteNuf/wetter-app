@@ -1,6 +1,7 @@
 import { renderLoadingScreen } from "./loadingScreen.js";
 import { rootElement } from "./domElements.js";
 import { renderDetailView } from "./renderDetailHtml.js";
+import { getActuallyWeatherAPI } from "./API_actuallyWeather.js";
 
 export function loadMainMenu() {
   rootElement.classList.remove("background-color");
@@ -22,12 +23,12 @@ export function loadMainHTML() {
   });
 }
 
-export function renderMainMenu() {
+export async function renderMainMenu() {
   rootElement.innerHTML = `
     
     <div class="main-menu">
     ${getMainMenuHtml()}
-    ${getMainMenuCityListHtml()} 
+    ${await getMainMenuCityListHtml()} 
     </div>`;
 
   //register click event
@@ -54,25 +55,27 @@ export function getMainMenuHtml() {
      `;
 }
 
-export function getMainMenuCityListHtml() {
+export async function getMainMenuCityListHtml() {
   const favoriteCities = ["Mannheim", "London", "Peking"];
 
   const favoritCityElements = [];
 
   for (let city of favoriteCities) {
+    const cityWeather = await getActuallyWeatherAPI(city);
+
     const cityHtml = `
     
      <div class="city-wrapper">
           <div class="city-wrapper__delete city-wrapper__delete--show " data-city-id="1"></div>
-          <div class="city" data-city-name="${city}" style="background-image: url(&quot;/wetter-app/conditionImages/day/rain_day.jpg&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat;">
+          <div class="city" data-city-name="" style="background-image: url(&quot;/wetter-app/conditionImages/day/rain_day.jpg&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat;">
             <div class="city__left-column">
-              <h2 class="city__name">${city}</h2>
-              <div class="city__country"></div>
-              <div class="city__condition"></div>
+              <h2 class="city__name">${cityWeather.name}</h2>
+              <div class="city__country">${cityWeather.country}</div>
+              <div class="city__condition">${cityWeather.condition}</div>
             </div>
             <div class="city__right-column">
-              <div class="city__temperature"></div>
-              <div class="city__min-max-temperature">H:° T:°</div>
+              <div class="city__temperature">${cityWeather.temp}°</div>
+              <div class="city__min-max-temperature">H:${cityWeather.heatIndex}° T:${cityWeather.dewPoint}°</div>
             </div>
           </div>  
     `;

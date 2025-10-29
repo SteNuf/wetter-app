@@ -13,6 +13,8 @@ export async function getActuallyWeatherAPI(location) {
   const body = await response.json();
   weatherApi = body;
 
+  console.log(body);
+
   return {
     name: body.location.name,
     temp: formatTemperature(body.current.temp_c),
@@ -25,6 +27,7 @@ export async function getActuallyWeatherAPI(location) {
     uv: body.current.uv,
     pic: body.current.condition.code,
     isDay: body.current.is_day,
+    country: body.location.country,
   };
 }
 
