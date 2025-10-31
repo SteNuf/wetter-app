@@ -2,6 +2,7 @@ import { renderLoadingScreen } from "./loadingScreen.js";
 import { rootElement } from "./domElements.js";
 import { renderDetailView } from "./renderDetailHtml.js";
 import { getActuallyWeatherAPI } from "./API_actuallyWeather.js";
+import { getConditionImagePath } from "./schools_MVdSxpebVbCje6Sd8KoN_files_conditions.js";
 
 export function loadMainMenu() {
   rootElement.classList.remove("background-color");
@@ -63,11 +64,23 @@ export async function getMainMenuCityListHtml() {
   for (let city of favoriteCities) {
     const cityWeather = await getActuallyWeatherAPI(city);
 
+    const imagePath = getConditionImagePath(
+      cityWeather.pic,
+      cityWeather.isDay !== 1
+    );
+
+    const fullImagePath =
+      imagePath || "./wetter-app/conditionImages/day/cloudy_day.jpg";
+
     const cityHtml = `
     
      <div class="city-wrapper">
           <div class="city-wrapper__delete city-wrapper__delete--show " data-city-id="1"></div>
-          <div class="city" data-city-name="" style="background-image: url(&quot;/wetter-app/conditionImages/day/rain_day.jpg&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat;">
+          <div class="city" data-city-name="" style="background-image: url('${fullImagePath}');
+               background-size: cover;
+               background-position: center;
+               background-repeat: no-repeat;
+             ">
             <div class="city__left-column">
               <h2 class="city__name">${cityWeather.name}</h2>
               <div class="city__country">${cityWeather.country}</div>

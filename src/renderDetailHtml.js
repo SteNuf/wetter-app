@@ -64,7 +64,7 @@ function getHeaderHtml() {
   
       
       <button class="test-save-button">Save</button>
-      <button class="test-save-button-image">Load to main</button>
+      
 
 
      <div class="actually-weather">
