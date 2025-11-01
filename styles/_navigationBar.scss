@@ -6,10 +6,12 @@
   &__back-Button {
     width: 2.5rem;
     filter: drop-shadow(1px 1px 5px #000);
+    cursor: pointer;
   }
 
   &__favorite-Button {
     width: 2.5rem;
     filter: drop-shadow(1px 1px 5px #000);
+    cursor: pointer;
   }
 }

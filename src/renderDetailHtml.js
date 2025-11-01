@@ -20,6 +20,11 @@ import { renderMiniStatic } from "./API_miniStatic.js";
 import { getWeatherImagPic } from "./renderImagePic.js";
 import { renderLoadingScreen } from "./loadingScreen.js";
 import { rootElement } from "./domElements.js";
+import {
+  loadMainHTML,
+  loadMainMenu,
+  renderMainMenu,
+} from "./renderMainMenu.js";
 
 export async function renderDetailView(location) {
   rootElement.innerHTML =
@@ -29,10 +34,19 @@ export async function renderDetailView(location) {
     getForecastDaysHtml() +
     getMiniStaticHtml();
 
-  const testSaveButton = document.querySelector(".test-save-button");
+  const navBarElement = document.querySelector(".navigation-bar__back-Button");
+  navBarElement.addEventListener("click", () => {
+    //loadMainMenu();
+    loadMainHTML();
+    renderMainMenu();
+  });
+
+  //const testSaveButton = document.querySelector(".test-save-button");
+  const saveButton = document.querySelector(".navigation-bar__favorite-Button");
 
   //Test Button zum speichern der Daten
-  testSaveButton.addEventListener("click", async () => {
+  saveButton.addEventListener("click", async () => {
+    console.log("Hallo");
     const saveActuallyWeather = await saveActuallyWeatherToLocalStorage();
     if (saveActuallyWeather) {
       renderWeatherText(saveActuallyWeather);
@@ -40,6 +54,15 @@ export async function renderDetailView(location) {
     const saveTodayForecast = await saveTodayForecastToLocalStorage();
     const saveThreeDaysForecast = await saveThreeDaysForecastToLocalStorage();
   });
+
+  // testSaveButton.addEventListener("click", async () => {
+  //   const saveActuallyWeather = await saveActuallyWeatherToLocalStorage();
+  //   if (saveActuallyWeather) {
+  //     renderWeatherText(saveActuallyWeather);
+  //   }
+  //   const saveTodayForecast = await saveTodayForecastToLocalStorage();
+  //   const saveThreeDaysForecast = await saveThreeDaysForecastToLocalStorage();
+  // });
 
   const weather = await getActuallyWeatherAPI(location);
   const weatherTodayForecast = await getTodayForecastWeather(location);
@@ -69,15 +92,12 @@ function getNavBarHtml() {
         </div>
      </div>
         
-      <button class="test-save-button">Save</button>
+      
       `;
 }
 
 function getHeaderHtml() {
-  return `
-
-     
-
+  return `    
 
      <div class="actually-weather">
         <div class="actually-weather__town"></div>

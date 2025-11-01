@@ -10,18 +10,25 @@ export function loadMainMenu() {
 }
 
 // StartSeite mit Input Eingabefeld
-export function loadMainHTML() {
-  rootElement.innerHTML = getMainMenuHtml() + getMainMenuCityListHtml();
+export async function loadMainHTML() {
+  rootElement.style.backgroundImage = "";
+
+  const cityListHtml = await getMainMenuCityListHtml();
+  rootElement.innerHTML = getMainMenuHtml() + cityListHtml;
 
   const inputElement = document.querySelector(".main-menu__search-input");
 
-  inputElement.addEventListener("keydown", async (event) => {
-    if (event.key === "Enter") {
-      const location = inputElement.value.trim() || "Leipzig";
-      renderLoadingScreen();
-      await renderDetailView(location);
-    }
-  });
+  if (inputElement) {
+    inputElement.addEventListener("keydown", async (event) => {
+      if (event.key === "Enter") {
+        const location = inputElement.value.trim() || "Leipzig";
+        renderLoadingScreen();
+        await renderDetailView(location);
+      }
+    });
+  } else {
+    console.warn("main-menu__search-input nicht gefunden.");
+  }
 }
 
 export async function renderMainMenu() {
