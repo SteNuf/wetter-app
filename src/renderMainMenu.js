@@ -57,7 +57,7 @@ export function getMainMenuHtml() {
 }
 
 export async function getMainMenuCityListHtml() {
-  const favoriteCities = ["Mannheim", "London", "Peking"];
+  const favoriteCities = ["Mannheim", "London", "Peking", "Berlin"];
 
   const favoritCityElements = [];
 
@@ -76,7 +76,7 @@ export async function getMainMenuCityListHtml() {
     
      <div class="city-wrapper">
           <div class="city-wrapper__delete city-wrapper__delete--show " data-city-id="1"></div>
-          <div class="city" data-city-name="" style="background-image: url('${fullImagePath}');
+          <div class="city" data-city-name="${cityWeather.name}" style="background-image: url('${fullImagePath}');
                background-size: cover;
                background-position: center;
                background-repeat: no-repeat;
