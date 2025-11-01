@@ -1,5 +1,15 @@
 .navigation-bar {
-  background-color: red;
+  display: flex;
+  justify-content: space-between;
   color: $font-color;
-  border: 5px solid magenta;
+
+  &__back-Button {
+    width: 2.5rem;
+    filter: drop-shadow(1px 1px 5px #000);
+  }
+
+  &__favorite-Button {
+    width: 2.5rem;
+    filter: drop-shadow(1px 1px 5px #000);
+  }
 }
