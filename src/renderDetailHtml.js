@@ -41,28 +41,20 @@ export async function renderDetailView(location) {
     renderMainMenu();
   });
 
-  //const testSaveButton = document.querySelector(".test-save-button");
   const saveButton = document.querySelector(".navigation-bar__favorite-Button");
 
   //Test Button zum speichern der Daten
   saveButton.addEventListener("click", async () => {
+    saveButton.style.display = "none";
     console.log("Hallo");
-    const saveActuallyWeather = await saveActuallyWeatherToLocalStorage();
+    const saveActuallyWeather = saveActuallyWeatherToLocalStorage(); //await
     if (saveActuallyWeather) {
       renderWeatherText(saveActuallyWeather);
     }
-    const saveTodayForecast = await saveTodayForecastToLocalStorage();
-    const saveThreeDaysForecast = await saveThreeDaysForecastToLocalStorage();
-  });
 
-  // testSaveButton.addEventListener("click", async () => {
-  //   const saveActuallyWeather = await saveActuallyWeatherToLocalStorage();
-  //   if (saveActuallyWeather) {
-  //     renderWeatherText(saveActuallyWeather);
-  //   }
-  //   const saveTodayForecast = await saveTodayForecastToLocalStorage();
-  //   const saveThreeDaysForecast = await saveThreeDaysForecastToLocalStorage();
-  // });
+    //const saveTodayForecast = await saveTodayForecastToLocalStorage();
+    //const saveThreeDaysForecast = await saveThreeDaysForecastToLocalStorage();
+  });
 
   const weather = await getActuallyWeatherAPI(location);
   const weatherTodayForecast = await getTodayForecastWeather(location);
@@ -91,8 +83,7 @@ function getNavBarHtml() {
           </svg>
         </div>
      </div>
-        
-      
+          
       `;
 }
 

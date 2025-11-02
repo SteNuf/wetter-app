@@ -1,7 +1,7 @@
 import { renderLoadingScreen } from "./loadingScreen.js";
 import { rootElement } from "./domElements.js";
 import { renderDetailView } from "./renderDetailHtml.js";
-import { getActuallyWeatherAPI } from "./API_actuallyWeather.js";
+import { getActuallyWeatherFromLocalStorage } from "./API_actuallyWeather.js";
 import { getConditionImagePath } from "./schools_MVdSxpebVbCje6Sd8KoN_files_conditions.js";
 
 export function loadMainMenu() {
@@ -64,13 +64,19 @@ export function getMainMenuHtml() {
 }
 
 export async function getMainMenuCityListHtml() {
-  const favoriteCities = ["Mannheim", "London", "Peking", "Berlin"];
+  const savedCityFromLocalStorage = getActuallyWeatherFromLocalStorage(); // gespeicherte Stadt holen
+  const cityElements = [];
 
-  const favoritCityElements = [];
+  //wenn keine gespeicherte Stadt => Hinweis anzeigen:
+  if (!savedCityFromLocalStorage || savedCityFromLocalStorage.length === 0) {
+    return `
+    <div class="main-menu__city-list">
+        <div class="city__empty">Noch keine gespeicherten Städte.</div>
+      </div>
+    `;
+  }
 
-  for (let city of favoriteCities) {
-    const cityWeather = await getActuallyWeatherAPI(city);
-
+  for (let cityWeather of savedCityFromLocalStorage) {
     const imagePath = getConditionImagePath(
       cityWeather.pic,
       cityWeather.isDay !== 1
@@ -99,14 +105,12 @@ export async function getMainMenuCityListHtml() {
             </div>
           </div>  
     `;
-    favoritCityElements.push(cityHtml);
+    cityElements.push(cityHtml);
   }
-
-  const favoritCitiesHtml = favoritCityElements.join("");
 
   return `
   
-  <div class="main-menu__city-list">${favoritCitiesHtml}</div>
+  <div class="main-menu__city-list">${cityElements.join("")}</div>
   
   `;
 }
