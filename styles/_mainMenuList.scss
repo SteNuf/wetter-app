@@ -1,15 +1,15 @@
 .main-menu__city-list {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 1rem;
   width: 100%;
+  align-items: stretch;
 }
 
 .city-wrapper {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   width: 100%;
 }
 
@@ -21,7 +21,8 @@
   cursor: pointer;
 }
 .city {
-  width: 94%;
+  flex: 1;
+  width: auto;
   flex-direction: column;
   align-items: center;
   padding: 1rem;

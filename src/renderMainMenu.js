@@ -15,7 +15,7 @@ export async function loadMainHTML() {
   const inputElement = document.querySelector(".main-menu__search-input");
 
   rootElement.style.backgroundImage = "";
-  rootElement.innerHTML = getMainMenuHtml() + cityListHtml;
+  rootElement.innerHTML = `<div class="main-menu">${getMainMenuHtml()} ${cityListHtml}</div>`;
 
   if (inputElement) {
     inputElement.addEventListener("keydown", async (event) => {
@@ -35,8 +35,7 @@ export async function renderMainMenu() {
     
     <div class="main-menu">
     ${getMainMenuHtml()}
-    ${await getMainMenuCityListHtml()} 
-    </div>`;
+    ${await getMainMenuCityListHtml()} </div>`;
 
   //register click event
   registerEventListeners();
@@ -87,11 +86,12 @@ export async function getMainMenuCityListHtml() {
     const cityHtml = `
     
      <div class="city-wrapper">
-          <div class="city-wrapper__delete city-wrapper__delete--show " data-city-id="1"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-</svg>
-
+         <div class="city-wrapper__delete city-wrapper__delete--show " data-city-id="1"> 
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+             </svg>
           </div>
+
           <div class="city" data-city-name="${cityWeather.name}" style="background-image: url('${fullImagePath}');
                background-size: cover;
                background-position: center;
@@ -107,6 +107,7 @@ export async function getMainMenuCityListHtml() {
               <div class="city__min-max-temperature">H:${cityWeather.heatIndex}° T:${cityWeather.dewPoint}°</div>
             </div>
           </div>  
+      </div>
     `;
     cityElements.push(cityHtml);
   }
