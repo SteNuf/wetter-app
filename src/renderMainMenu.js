@@ -11,12 +11,11 @@ export function loadMainMenu() {
 
 // StartSeite mit Input Eingabefeld
 export async function loadMainHTML() {
-  rootElement.style.backgroundImage = "";
-
   const cityListHtml = await getMainMenuCityListHtml();
-  rootElement.innerHTML = getMainMenuHtml() + cityListHtml;
-
   const inputElement = document.querySelector(".main-menu__search-input");
+
+  rootElement.style.backgroundImage = "";
+  rootElement.innerHTML = getMainMenuHtml() + cityListHtml;
 
   if (inputElement) {
     inputElement.addEventListener("keydown", async (event) => {
@@ -26,9 +25,9 @@ export async function loadMainHTML() {
         await renderDetailView(location);
       }
     });
-  } else {
-    console.warn("main-menu__search-input nicht gefunden.");
-  }
+  } //else {
+  //   console.warn("main-menu__search-input nicht gefunden.");
+  // }
 }
 
 export async function renderMainMenu() {
@@ -88,7 +87,11 @@ export async function getMainMenuCityListHtml() {
     const cityHtml = `
     
      <div class="city-wrapper">
-          <div class="city-wrapper__delete city-wrapper__delete--show " data-city-id="1"></div>
+          <div class="city-wrapper__delete city-wrapper__delete--show " data-city-id="1"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+
+          </div>
           <div class="city" data-city-name="${cityWeather.name}" style="background-image: url('${fullImagePath}');
                background-size: cover;
                background-position: center;
@@ -117,6 +120,60 @@ export async function getMainMenuCityListHtml() {
 
 function registerEventListeners() {
   const cities = document.querySelectorAll(".city");
+  const inputElement = document.querySelector(".main-menu__search-input");
+  const editButtonElement = document.querySelector(".main-menu__edit");
+
+  if (editButtonElement) {
+    editButtonElement.addEventListener("click", () => {
+      // Toggle zwischen "Bearbeiten" und "Fertig"
+      if (editButtonElement.textContent.trim() === "Bearbeiten") {
+        editButtonElement.textContent = "Fertig";
+        // Hier könntest du z. B. alle Lösch-Icons einblenden:
+        document.querySelectorAll(".city-wrapper__delete").forEach((btn) => {
+          btn.style.display = "block";
+        });
+      } else {
+        editButtonElement.textContent = "Bearbeiten";
+        // Und hier wieder ausblenden:
+        document.querySelectorAll(".city-wrapper__delete").forEach((btn) => {
+          btn.style.display = "none";
+        });
+      }
+    });
+  }
+
+  // if (editButtonElement) {
+  //   editButtonElement.addEventListener("click", () => {
+  //     const isEditing = editButtonElement.textContent.trim() === "Berabeiten";
+  //     editButtonElement.textContent = isEditing ? "Fertig" : "Bearbeiten";
+
+  //     document.querySelectorAll(".city-wrapper__delete").forEach((btn) => {
+  //       btn.style.display = isEditing ? "block" : "none";
+
+  //       // Wenn wir jetzt in den Bearbeiten-Modus gehen,
+  //       // registrieren wir den Klick fürs Löschen:
+  //       if (isEditing) {
+  //         btn.addEventListener("click", async (e) => {
+  //           e.stopPropagation(); // verhindert, dass city-Click ausgelöst wird
+  //           const cityElement = btn.closest(".city");
+  //           const cityName = cityElement?.getAttribute("data-city-name");
+
+  //           if (cityName) {
+  //             // Stadt aus LocalStorage löschen:
+  //             const stored =
+  //               JSON.parse(localStorage.getItem("actually-weather")) || [];
+  //             const updated = stored.filter((c) => c.name !== cityName);
+  //             localStorage.setItem("actually-weather", JSON.stringify(updated));
+
+  //             // Stadt aus DOM entfernen:
+  //             btn.closest(".city-wrapper").remove();
+  //           }
+  //         });
+  //       }
+  //     });
+  //   });
+  // }
+
   console.log(cities);
   cities.forEach((city) => {
     city.addEventListener("click", () => {
@@ -125,7 +182,6 @@ function registerEventListeners() {
       renderDetailView(cityName);
     });
   });
-  const inputElement = document.querySelector(".main-menu__search-input");
 
   inputElement.addEventListener("keydown", async (event) => {
     if (event.key === "Enter") {
