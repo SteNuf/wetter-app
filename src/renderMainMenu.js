@@ -127,55 +127,17 @@ function registerEventListeners() {
   if (editButtonElement) {
     editButtonElement.addEventListener("click", () => {
       // Toggle zwischen "Bearbeiten" und "Fertig"
-      if (editButtonElement.textContent.trim() === "Bearbeiten") {
-        editButtonElement.textContent = "Fertig";
-        // Hier könntest du z. B. alle Lösch-Icons einblenden:
-        document.querySelectorAll(".city-wrapper__delete").forEach((btn) => {
-          btn.style.display = "block";
-        });
-      } else {
-        editButtonElement.textContent = "Bearbeiten";
-        // Und hier wieder ausblenden:
-        document.querySelectorAll(".city-wrapper__delete").forEach((btn) => {
-          btn.style.display = "none";
-        });
-      }
+
+      const isEditing = editButtonElement.textContent.trim() === "Bearbeiten";
+      editButtonElement.textContent = isEditing ? "Fertig" : "Bearbeiten";
+
+      //Löschbuttons ein- oder ausblenden
+      document.querySelectorAll(".city-wrapper__delete").forEach((btn) => {
+        btn.style.display = isEditing ? "block" : "none";
+      });
     });
   }
-
-  // if (editButtonElement) {
-  //   editButtonElement.addEventListener("click", () => {
-  //     const isEditing = editButtonElement.textContent.trim() === "Berabeiten";
-  //     editButtonElement.textContent = isEditing ? "Fertig" : "Bearbeiten";
-
-  //     document.querySelectorAll(".city-wrapper__delete").forEach((btn) => {
-  //       btn.style.display = isEditing ? "block" : "none";
-
-  //       // Wenn wir jetzt in den Bearbeiten-Modus gehen,
-  //       // registrieren wir den Klick fürs Löschen:
-  //       if (isEditing) {
-  //         btn.addEventListener("click", async (e) => {
-  //           e.stopPropagation(); // verhindert, dass city-Click ausgelöst wird
-  //           const cityElement = btn.closest(".city");
-  //           const cityName = cityElement?.getAttribute("data-city-name");
-
-  //           if (cityName) {
-  //             // Stadt aus LocalStorage löschen:
-  //             const stored =
-  //               JSON.parse(localStorage.getItem("actually-weather")) || [];
-  //             const updated = stored.filter((c) => c.name !== cityName);
-  //             localStorage.setItem("actually-weather", JSON.stringify(updated));
-
-  //             // Stadt aus DOM entfernen:
-  //             btn.closest(".city-wrapper").remove();
-  //           }
-  //         });
-  //       }
-  //     });
-  //   });
-  // }
-
-  console.log(cities);
+  //Klick auf Stadt öffnet die Detailansicht:
   cities.forEach((city) => {
     city.addEventListener("click", () => {
       const cityName = city.getAttribute("data-city-name");
@@ -184,11 +146,43 @@ function registerEventListeners() {
     });
   });
 
+  //Klick auf Enter im Suchfeld:
   inputElement.addEventListener("keydown", async (event) => {
     if (event.key === "Enter") {
       const location = inputElement.value.trim() || "Leipzig";
       renderLoadingScreen();
       await renderDetailView(location);
     }
+  });
+
+  // Klick auf den Löschbutton:
+  document.querySelectorAll(".city-wrapper__delete").forEach((deletBtn) => {
+    deletBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      const cityWrapper = deletBtn.closest(".city-wrapper");
+      const cityElement = cityWrapper.querySelector(".city");
+      const cityName = cityElement?.getAttribute("data-city-name");
+
+      if (!cityName) return;
+
+      //Localstorage aktualisieren:
+      const savedCities =
+        JSON.parse(localStorage.getItem("actually-weather")) || [];
+      const updatedCities = savedCities.filter(
+        (city) => city.name !== cityName
+      );
+      localStorage.setItem("actually-weather", JSON.stringify(updatedCities));
+      //DOM aktualisieren
+      cityWrapper.remove();
+
+      // Wenn keine Stadt mehr da ist, Hinweis anzeigen
+      const listContainer = document.querySelector(".main-menu__city-list");
+      if (listContainer.children.length === 0) {
+        listContainer.innerHTML = `
+          <div class="city__empty">Noch keine gespeicherten Städte.</div>
+        `;
+      }
+    });
   });
 }
