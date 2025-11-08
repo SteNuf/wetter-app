@@ -1,4 +1,4 @@
-const API_KEY = cab870990fda438db75125235251909;
+const API_KEY = "cab870990fda438db75125235251909";
 
 export async function searchCitiesAPI(query) {
   const response = await fetch(
