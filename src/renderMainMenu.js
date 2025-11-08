@@ -34,8 +34,8 @@ export async function renderMainMenu() {
   rootElement.innerHTML = `
     
     <div class="main-menu">
-    ${getMainMenuHtml()}
-    ${await getMainMenuCityListHtml()} </div>`;
+    ${getMainMenuHtml()}    
+    ${await getMainMenuCityListHtml()} </div>`; //ggf. in Zeile 38 awaiten
 
   //register click event
   registerEventListeners();
@@ -45,7 +45,7 @@ export function getMainMenuHtml() {
   return `   
    
        <div class="main-menu__heading">Wetter
-        <button class="main-menu__edit">Bearbeiten</button>
+          <button class="main-menu__edit">Bearbeiten</button>
        </div>
        <div class="main-menu__search-bar">
           <input
@@ -53,12 +53,33 @@ export function getMainMenuHtml() {
             class="main-menu__search-input"
             placeholder="Nach Stadt suchen..."
           />
-            <div
-            class="main-menu__search-results main-menu__search-results--hidden"
-            ></div>
-        </div>
+            ${getMainMenuSearchResults()}          
+       </div>
       
      `;
+}
+
+export function getMainMenuSearchResults() {
+  return `
+
+      <div class="main-menu__search-results main-menu__search-results--hidden"
+            >
+        <div class="search-result" data-city-id="" data-city-name="" tabindex="0">
+          <h3 class="search-result__name">Test 1</h3>
+          <p class="search-result__country">Deutschland</p>
+        </div>
+
+       <div class="search-result" data-city-id="" data-city-name="" tabindex="0">
+        <h3 class="search-result__name">Test 2</h3>
+        <p class="search-result__country">Deutschland</p>
+       </div>
+
+       <div class="search-result" data-city-id="" data-city-name="" tabindex="0">
+        <h3 class="search-result__name">Test 3</h3>
+        <p class="search-result__country">Deutschland</p>
+       </div>  
+    </div>
+  `;
 }
 
 export async function getMainMenuCityListHtml() {
