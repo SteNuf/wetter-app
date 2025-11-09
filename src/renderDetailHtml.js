@@ -25,6 +25,15 @@ import {
 } from "./renderMainMenu.js";
 
 export async function renderDetailView(location) {
+  let locationQuery = location;
+
+  // Prüfen, ob location ein Objekt ist (z. B. {id, name, lat, lon})
+  if (typeof location === "object" && location.lat && location.lon) {
+    locationQuery = `${location.lat},${location.lon}`;
+  } else if (typeof location === "object" && location.name) {
+    locationQuery = location.name;
+  }
+
   rootElement.innerHTML =
     getNavBarHtml() +
     getHeaderHtml() +
@@ -35,12 +44,17 @@ export async function renderDetailView(location) {
   const navBarElement = document.querySelector(".navigation-bar__back-Button");
   const saveButton = document.querySelector(".navigation-bar__favorite-Button");
 
-  const weather = await getActuallyWeatherAPI(location);
-  const weatherTodayForecast = await getTodayForecastWeather(location);
-  const weatherThreeDaysForecast = await getThreeDaysForecastWeather(location);
+  const weather = await getActuallyWeatherAPI(locationQuery);
+  const weatherTodayForecast = await getTodayForecastWeather(locationQuery);
+  const weatherThreeDaysForecast = await getThreeDaysForecastWeather(
+    locationQuery
+  );
   const savedCities = getActuallyWeatherFromLocalStorage(); //Prüfen ob Stadt gespeichert ist:
   const isAlreadySaved = savedCities.some(
-    (city) => city.location?.name === location || city.name === location
+    (city) =>
+      city.id === location.id ||
+      city.name.toLowerCase() ===
+        (location.name ? location.name.toLowerCase() : location.toLowerCase())
   );
 
   if (isAlreadySaved) {
@@ -52,15 +66,17 @@ export async function renderDetailView(location) {
   //Zurück Button
   navBarElement.addEventListener("click", () => {
     //loadMainMenu();
-    loadMainHTML();
+
     renderMainMenu();
   });
 
   // Button zum Speichern der Daten
   saveButton.addEventListener("click", async () => {
     saveButton.style.display = "none"; // Sofort ausblenden, um doppelte  Speicherung zu vermeiden.
-    console.log("Hallo");
+    console.log("Stadt wird gespeichert");
     await saveActuallyWeatherToLocalStorage();
+    console.log("Stadt wird im LocalStorage gespeichert.");
+    await renderMainMenu();
   });
 
   renderWeatherText(weather);

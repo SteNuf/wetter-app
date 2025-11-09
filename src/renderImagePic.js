@@ -11,13 +11,7 @@ export function getWeatherImagPic(weather) {
     ? imagePath
     : "./wetter-app/conditionImages/day/cloudy_day.jpg";
 
-  const containers = [
-    ".background-color",
-    //".actually-weather",
-    //".today-forecast",
-    //".forecast",
-    //".mini-stats",
-  ];
+  const containers = [".background-color"];
 
   containers.forEach((selector) => {
     const element = document.querySelector(selector);

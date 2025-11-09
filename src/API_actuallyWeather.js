@@ -2,22 +2,57 @@ import { formatTemperature } from "./utility";
 
 //1. Local Storage erstellen:
 const LOCAL_STORAGE_KEY = "actually-weather";
-
 let weatherApi = null;
 
 //2. API getActuallyWeatherAPI() Verbindung erstellen:
 export async function getActuallyWeatherAPI(location) {
+  let apiQuery = location;
+  let foundCity = null;
+
+  if (!isNaN(parseInt(location)) && isFinite(location)) {
+    const savedCities =
+      JSON.parse(localStorage.getItem("actually-weather")) || [];
+
+    foundCity = savedCities.find((c) => c.id === Number(location));
+
+    if (foundCity && foundCity.lat && foundCity.lon) {
+      apiQuery = `${foundCity.lat},${foundCity.lon}`;
+      console.log("Koordinaten für ID gefunden:", apiQuery);
+    } else {
+      console.warn(
+        "Keine Stadt mit dieser ID im LocalStorage gefunden:",
+        location
+      );
+      apiQuery = foundCity?.name || location;
+      if (!isNaN(apiQuery)) {
+        // wenn immer noch nur Zahl, nimm einen Standardwert
+        apiQuery = "Leipzig";
+      }
+    }
+  }
+
   const response = await fetch(
-    `http://api.weatherapi.com/v1/current.json?key=cab870990fda438db75125235251909&q=${location}&days=3&lang=de`
+    `http://api.weatherapi.com/v1/current.json?key=cab870990fda438db75125235251909&q=${encodeURIComponent(
+      apiQuery
+    )}&days=3&lang=de`
   );
+
+  //Fehlerprüfung:
+  if (!response.ok) {
+    const errorBody = await response.json();
+    console.error("API-Fehler:", errorBody);
+    throw new Error("Fehler beim Abrufen der Wetterdaten für: " + location);
+  }
   const body = await response.json();
-  //weatherApi = body;
 
   console.log(body);
 
   const simplyfiedWeather = {
+    id: body.location.id || Date.now(),
     name: body.location.name,
     temp: formatTemperature(body.current.temp_c),
+    lat: body.location.lat,
+    lon: body.location.lon,
     condition: body.current.condition.text,
     heatIndex: formatTemperature(body.current.heatindex_c),
     dewPoint: formatTemperature(body.current.dewpoint_c),
@@ -37,27 +72,27 @@ export async function getActuallyWeatherAPI(location) {
 
 //3. API in LocalStorage speichern:
 export function saveActuallyWeatherToLocalStorage() {
-  const storedData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-  const saveActuallyWeatherData = Array.isArray(storedData) ? storedData : [];
+  const storedData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
   const newWeatherData = weatherApi;
 
   //Prüfen ob Stadt schon existiert.
-  const existingActuallyWeatherData = saveActuallyWeatherData.findIndex(
-    (item) =>
-      item.name === newWeatherData.location?.name ||
-      item.name === newWeatherData.name
+  const existingIndex = storedData.findIndex(
+    (item) => item.id === newWeatherData.id
   );
-  if (existingActuallyWeatherData !== -1) {
-    // Bestehenden Eintrag aktualisieren:
-    saveActuallyWeatherData[existingActuallyWeatherData] = newWeatherData;
+  if (existingIndex === -1) {
+    // 2. Wenn die Stadt NICHT existiert (Index ist -1), DANN wird sie hinzugefügt.
+    storedData.push(newWeatherData);
+    console.log("Neue Stadt hinzugefügt:", newWeatherData.name);
   } else {
-    //neue Stadt hinzufügen:
-    saveActuallyWeatherData.push(newWeatherData);
+    // 3. Wenn die Stadt existiert, tun wir nichts.
+    // Falls du die vorhandene Stadt doch aktualisieren willst, siehe Alternative 2 unten.
+    console.log(
+      "Stadt ist bereits gespeichert. Es wird keine neue hinzugefügt oder überschrieben."
+    );
   }
-  localStorage.setItem(
-    LOCAL_STORAGE_KEY,
-    JSON.stringify(saveActuallyWeatherData)
-  );
+
+  // Speichere die aktualisierte (oder unveränderte) Liste zurück.
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(storedData));
 }
 
 //4. API aus LocalStorage herausgeben:

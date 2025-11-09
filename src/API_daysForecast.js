@@ -7,10 +7,37 @@ let threeDaysForecastAPI = "";
 
 //2. API getActuallyWeatherAPI() Verbindung erstellen:
 export async function getThreeDaysForecastWeather(location) {
-  const response = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=${location}&days=3&lang=de`
-  );
+  let apiQuery = location;
+  let foundCity = null;
 
+  if (!isNaN(parseInt(location)) && isFinite(location)) {
+    const savedCities =
+      JSON.parse(localStorage.getItem("actually-weather")) || [];
+    foundCity = savedCities.find((c) => c.id === Number(location));
+
+    if (foundCity && foundCity.lat && foundCity.lon) {
+      apiQuery = `${foundCity.lat},${foundCity.lon}`;
+      console.log("Koordinaten für ID gefunden:", apiQuery);
+    } else {
+      console.warn(
+        "Keine Stadt mit dieser ID im LocalStorage gefunden:",
+        location
+      );
+      apiQuery = foundCity?.name || location;
+      if (!isNaN(apiQuery)) apiQuery = "Leipzig";
+    }
+  }
+
+  const response = await fetch(
+    `http://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=${encodeURIComponent(
+      apiQuery
+    )}&days=3&lang=de`
+  );
+  if (!response.ok) {
+    const errorBody = await response.json();
+    console.error("API-Fehler:", errorBody);
+    throw new Error("Fehler beim Abrufen der Wetterdaten für: " + location);
+  }
   const body = await response.json();
   threeDaysForecastAPI = body;
 

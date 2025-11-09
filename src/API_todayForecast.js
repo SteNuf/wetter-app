@@ -2,15 +2,42 @@ import { formatTemperature, get24HoursForecastFromNow } from "./utility";
 
 //1. Local Storage erstellen:
 const LOCAL_STORAGE_KEY = "today-forecast";
-
-let weatherTodayForcastAPI = "";
-let hoursForecastArray = [];
+let weatherTodayForcastAPI = null;
 
 //2. API getActuallyWeatherAPI() Verbindung erstellen:
 export async function getTodayForecastWeather(location) {
+  let apiQuery = location;
+  let foundCity = null;
+
+  if (!isNaN(parseInt(location)) && isFinite(location)) {
+    const savedCities =
+      JSON.parse(localStorage.getItem("actually-weather")) || [];
+    const foundCity = savedCities.find((c) => c.id === Number(location));
+
+    if (foundCity && foundCity.lat && foundCity.lon) {
+      apiQuery = `${foundCity.lat},${foundCity.lon}`;
+      console.log("Koordinaten für ID gefunden:", apiQuery);
+    } else {
+      console.warn(
+        "Keine Stadt mit dieser ID im LocalStorage gefunden:",
+        location
+      );
+      apiQuery = foundCity?.name || location;
+      if (!isNaN(apiQuery)) apiQuery = "Leipzig";
+    }
+  }
+
   const response = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=${location}&days=3&lang=de`
+    `http://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=${encodeURIComponent(
+      apiQuery
+    )}&days=3&lang=de`
   );
+  //Fehlerprüfung:
+  if (!response.ok) {
+    const errorBody = await response.json();
+    console.error("API-Fehler:", errorBody);
+    throw new Error("Fehler beim Abrufen der Wetterdaten für: " + location);
+  }
   const body = await response.json();
   weatherTodayForcastAPI = body;
 
@@ -29,8 +56,8 @@ export async function getTodayForecastWeather(location) {
     currentEpoch,
   };
 }
-//3. API in LocalStorage speichern:
-export function saveTodayForecastToLocalStorage(saveTodayForecast) {
+//3. Vorhersage API in LocalStorage speichern:
+export function saveTodayForecastToLocalStorage() {
   const saveTodayForecastData = weatherTodayForcastAPI;
   localStorage.setItem(
     LOCAL_STORAGE_KEY,

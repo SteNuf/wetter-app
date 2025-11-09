@@ -20,11 +20,13 @@ export async function loadMainHTML() {
 
   // Input-Event nach dem Einfügen des DOM registrieren
   const inputElement = document.querySelector(".main-menu__search-input");
+
   if (inputElement) {
     inputElement.addEventListener("keydown", async (event) => {
       if (event.key === "Enter") {
         const location = inputElement.value.trim() || "Leipzig";
-        renderLoadingScreen();
+        renderLoadingScreen("Lade Wetterdaten...");
+        await new Promise((resolve) => requestAnimationFrame(resolve, 500));
         await renderDetailView(location);
       }
     });
@@ -38,6 +40,8 @@ export async function renderMainMenu() {
       ${await getMainMenuCityListHtml()}
     </div>
   `;
+
+  rootElement.style.backgroundImage = "";
 
   // DOM ist gesetzt -> Eventlistener registrieren
   registerEventListeners();
@@ -61,7 +65,7 @@ export function getMainMenuHtml() {
 }
 
 export function getMainMenuSearchResultsHtml() {
-  // Platzhalter-HTML (wird zur Laufzeit überschrieben)
+  // Platzhalter-HTML (wird zur Laufzeit überschrieben):
   return `
     <div class="main-menu__search-results main-menu__search-results--hidden"></div>
   `;
@@ -91,13 +95,13 @@ export async function getMainMenuCityListHtml() {
 
     const cityHtml = `
      <div class="city-wrapper">
-       <div class="city-wrapper__delete city-wrapper__delete--show" data-city-id="1"> 
+       <div class="city-wrapper__delete city-wrapper__delete--show" data-city-id="${cityWeather.id}"> 
          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
          </svg>
        </div>
 
-       <div class="city" data-city-name="${cityWeather.name}" style="background-image: url('${fullImagePath}');
+       <div class="city" data-city-id="${cityWeather.id}" style="background-image: url('${fullImagePath}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;">
@@ -139,8 +143,12 @@ function registerEventListeners() {
   if (cities && cities.length > 0) {
     cities.forEach((city) => {
       city.addEventListener("click", () => {
-        const cityName = city.getAttribute("data-city-name");
-        if (cityName) renderDetailView(cityName);
+        const cityId = city.getAttribute("data-city-id");
+        if (cityId) {
+          renderDetailView(cityId);
+        } else {
+          console.error("Fehler: Keine 'data-city-id' gefunden.");
+        }
       });
     });
   }
@@ -163,16 +171,30 @@ function registerEventListeners() {
 
       const cityWrapper = deletBtn.closest(".city-wrapper");
       const cityElement = cityWrapper.querySelector(".city");
-      const cityName = cityElement?.getAttribute("data-city-name");
+      const cityIdString = cityElement
+        ? cityElement.getAttribute("data-city-id")
+        : null;
 
-      if (!cityName) return;
+      console.log("Versuche Stadt mit ID zu löschen:", cityIdString);
+
+      if (!cityIdString) {
+        console.error(
+          "Fehler: Konnte cityId nicht aus dem .city Element auslesen."
+        );
+        return;
+      }
 
       //Localstorage aktualisieren:
       const savedCities =
         JSON.parse(localStorage.getItem("actually-weather")) || [];
+
+      const cityIdNumber = Number(cityIdString);
       const updatedCities = savedCities.filter(
-        (city) => city.name !== cityName
+        (city) => city.id !== cityIdNumber
       );
+
+      console.log("Local Storage nach Löschen:", updatedCities);
+
       localStorage.setItem("actually-weather", JSON.stringify(updatedCities));
       //DOM aktualisieren
       cityWrapper.remove();
@@ -180,9 +202,9 @@ function registerEventListeners() {
       // Wenn keine Stadt mehr da ist, Hinweis anzeigen
       const listContainer = document.querySelector(".main-menu__city-list");
       if (!listContainer || listContainer.children.length === 0) {
-        const parent =
-          listContainer?.parentElement ||
-          document.querySelector(".main-menu__search-bar")?.parentElement;
+        // const parent =
+        //   listContainer?.parentElement ||
+        //   document.querySelector(".main-menu__search-bar")?.parentElement;
         if (listContainer) {
           listContainer.innerHTML = `<div class="city__empty">Noch keine gespeicherten Städte.</div>`;
         }
@@ -255,9 +277,12 @@ function renderSearchResults(results, container, inputElement) {
   container.innerHTML = results
     .map(
       (city) => `
-      <div class="search-result" data-lat="${city.lat}" data-lon="${
-        city.lon
-      }" tabindex="0">
+      <div class="search-result" 
+      data-id= "${city.id}"
+      data-name="${city.name}"
+      data-lat="${city.lat}" 
+      data-lon="${city.lon}" 
+      tabindex="0">
         <h3 class="search-result__name">${city.name}</h3>
         <p class="search-result__country">${city.country}${
         city.region ? " - " + city.region : ""
@@ -271,11 +296,16 @@ function renderSearchResults(results, container, inputElement) {
   // Klick auf Vorschlag
   container.querySelectorAll(".search-result").forEach((el) => {
     el.addEventListener("click", async () => {
-      const name = el.querySelector(".search-result__name").textContent;
-      inputElement.value = name;
+      const cityId = el.getAttribute("data-id");
+      const cityName = el.getAttribute("data-name");
+      const lat = el.getAttribute("data-lat");
+      const lon = el.getAttribute("data-lon");
+
+      inputElement.value = cityName;
       container.classList.add("main-menu__search-results--hidden");
+
       renderLoadingScreen();
-      await renderDetailView(name);
+      await renderDetailView({ id: cityId, name: cityName, lat, lon });
     });
   });
 }
