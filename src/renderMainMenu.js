@@ -5,15 +5,12 @@ import { getActuallyWeatherFromLocalStorage } from "./API_actuallyWeather.js";
 import { getConditionImagePath } from "./schools_MVdSxpebVbCje6Sd8KoN_files_conditions.js";
 import { searchCitiesAPI } from "./API_searchCity.js"; // bleibt importiert (externes Modul)
 
-/* ------------------------------
-   Haupt-Exports
-   ------------------------------ */
 export function loadMainMenu() {
   rootElement.classList.remove("background-color");
   renderLoadingScreen("Lade Übersicht...");
 }
 
-// StartSeite mit Input Eingabefeld
+// Startseite mit Input Eingabefeld
 export async function loadMainHTML() {
   const cityListHtml = await getMainMenuCityListHtml();
 
@@ -47,9 +44,6 @@ export async function renderMainMenu() {
   setUpSearchSuggestions();
 }
 
-/* ------------------------------
-   Markup-Helper
-   ------------------------------ */
 export function getMainMenuHtml() {
   return `   
        <div class="main-menu__heading">Wetter
@@ -125,9 +119,6 @@ export async function getMainMenuCityListHtml() {
   return `<div class="main-menu__city-list">${cityElements.join("")}</div>`;
 }
 
-/* ------------------------------
-   Events & Search
-   ------------------------------ */
 function registerEventListeners() {
   const cities = document.querySelectorAll(".city");
   const inputElement = document.querySelector(".main-menu__search-input");
@@ -206,6 +197,7 @@ function setUpSearchSuggestions() {
   if (!inputElement || !resultsContainer) return;
 
   let debounceTimeOut;
+  let lastResults = [];
 
   inputElement.addEventListener("input", () => {
     const query = inputElement.value.trim();
@@ -221,12 +213,28 @@ function setUpSearchSuggestions() {
     debounceTimeOut = setTimeout(async () => {
       try {
         const results = await searchCitiesAPI(query);
+        lastResults = results;
         renderSearchResults(results, resultsContainer, inputElement);
       } catch (error) {
         console.error("Fehler beim Laden der Städte:", error);
         resultsContainer.classList.add("main-menu__search-results--hidden");
       }
     }, 300);
+  });
+
+  //Fokus verliert -> Liste ausblenden:
+  inputElement.addEventListener("blur", () => {
+    setTimeout(() => {
+      resultsContainer.classList.add("main-menu__search-results--hidden");
+    }, 200);
+  });
+
+  //Klickt wieder ins Feld -> Liste erneut anzeigen:
+  inputElement.addEventListener("focus", () => {
+    const query = inputElement.value.trim();
+    if (query.length >= 2 && lastResults.length > 0) {
+      renderSearchResults(lastResults, resultsContainer, inputElement);
+    }
   });
 
   // Wenn man aus dem Input klickt → Ergebnisse ausblenden:
