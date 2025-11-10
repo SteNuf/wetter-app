@@ -45,8 +45,6 @@ export async function getActuallyWeatherAPI(location) {
   }
   const body = await response.json();
 
-  console.log(body);
-
   const simplyfiedWeather = {
     id: body.location.id || Date.now(),
     name: body.location.name,
@@ -66,7 +64,7 @@ export async function getActuallyWeatherAPI(location) {
   };
 
   weatherApi = simplyfiedWeather;
-  console.log("API Response gespeichert:", simplyfiedWeather);
+
   return simplyfiedWeather;
 }
 
