@@ -16,13 +16,8 @@ import {
 } from "./API_daysForecast.js";
 import { renderMiniStatic } from "./API_miniStatic.js";
 import { getWeatherImagPic } from "./renderImagePic.js";
-import { renderLoadingScreen } from "./loadingScreen.js";
 import { rootElement } from "./domElements.js";
-import {
-  loadMainHTML,
-  loadMainMenu,
-  renderMainMenu,
-} from "./renderMainMenu.js";
+import { renderMainMenu } from "./renderMainMenu.js";
 
 export async function renderDetailView(location) {
   let locationQuery = location;
@@ -49,13 +44,26 @@ export async function renderDetailView(location) {
   const weatherThreeDaysForecast = await getThreeDaysForecastWeather(
     locationQuery
   );
+
   const savedCities = getActuallyWeatherFromLocalStorage(); //Prüfen ob Stadt gespeichert ist:
-  const isAlreadySaved = savedCities.some(
-    (city) =>
-      city.id === location.id ||
+  const isAlreadySaved = savedCities.some((city) => {
+    const sameId = city.id && location.id && city.id === Number(location.id);
+    const sameCoordinates =
+      city.lat && city.lon && location.lat && location.lon
+        ? Math.abs(city.lat - location.lat) < 0.01 &&
+          Math.abs(city.lon - location.lon) < 0.01
+        : false;
+
+    const sameNameAndCountry =
       city.name.toLowerCase() ===
-        (location.name ? location.name.toLowerCase() : location.toLowerCase())
-  );
+        (location.name
+          ? location.name.toLowerCase()
+          : location.toLowerCase()) &&
+      city.country?.toLowerCase() ===
+        (location.country ? location.country.toLowerCase() : "");
+
+    return sameId || sameCoordinates || sameNameAndCountry;
+  });
 
   if (isAlreadySaved) {
     saveButton.style.display = "none"; //Verstecken, wenn vorhanden
@@ -65,17 +73,15 @@ export async function renderDetailView(location) {
 
   //Zurück Button
   navBarElement.addEventListener("click", () => {
-    //loadMainMenu();
-
     renderMainMenu();
   });
 
   // Button zum Speichern der Daten
   saveButton.addEventListener("click", async () => {
     saveButton.style.display = "none"; // Sofort ausblenden, um doppelte  Speicherung zu vermeiden.
-    console.log("Stadt wird gespeichert");
+
     await saveActuallyWeatherToLocalStorage();
-    console.log("Stadt wird im LocalStorage gespeichert.");
+
     await renderMainMenu();
   });
 
