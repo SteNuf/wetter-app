@@ -28,7 +28,7 @@ export async function getTodayForecastWeather(location) {
   }
 
   const response = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=${encodeURIComponent(
+    `https://api.weatherapi.com/v1/forecast.json?key=cab870990fda438db75125235251909&q=${encodeURIComponent(
       apiQuery
     )}&days=3&lang=de`
   );

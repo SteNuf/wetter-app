@@ -32,7 +32,7 @@ export async function getActuallyWeatherAPI(location) {
   }
 
   const response = await fetch(
-    `http://api.weatherapi.com/v1/current.json?key=cab870990fda438db75125235251909&q=${encodeURIComponent(
+    `https://api.weatherapi.com/v1/current.json?key=cab870990fda438db75125235251909&q=${encodeURIComponent(
       apiQuery
     )}&days=3&lang=de`
   );
